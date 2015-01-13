@@ -1,56 +1,827 @@
-= TrinityCore -- General information =
+== ReanEmu ==
 
-Copyright (C) TrinityCore (http://www.trinitycore.org)
+ReanEmu es un emulador creado con la unión de varios repositorios reconocidos y
+código nuestro con el afán de complementarlos y completarlos a todos en
+un único emulador que pueda brindar código útil, actualizado y estable.
 
-  Trinity Core is free software; you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation; either version 2 of the License, or
-  (at your option) any later version.
+Hemos generado una metodología y planificación interna la cual nos permite estar
+al día en las actualizaciones y mejoras de trinitycore, parches propios y de
+repositorios conocidos, puedes encontrarla en el archivo PLANIFICACION, si alguna
+sugerencia y/o aporte que quieras darnos tienes la mayor bienvenida en el equipo
+de los programadores de este repositorio basado en trinitycore y sus forks.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+Actualizaciones y novedades en twitter: http://twitter.com/ReanEmu
 
-  You should have received a copy of the GNU General Public License
-  along with this program; if not, write to the Free Software
-  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+Gracias a quienes hacen este proyecto posible y su respectivo crédito a:
 
-  In addition, as a special exception, the Trinity Core project
-  gives permission to link the code of its release of Trinity Core with
-  the OpenSSL project's "OpenSSL" library (or with modified versions of
-  it that use the same license as the "OpenSSL" library), and distribute
-  the linked executables.  You must obey the GNU General Public License
-  in all respects for all of the code used other than "OpenSSL".  If you
-  modify this file, you may extend this exception to your version of the
-  file, but you are not obligated to do so.  If you do not wish to do
-  so, delete this exception statement from your version.
+ Copyright (C) TrinityCore (http://www.trinitycore.org)
+ Copyright (C) Eilo (https://github.com/eilo)
+ Copyright (C) Muzashi (https://github.com/Muzashi)
+ Copyright (C) Jildor (https://github.com/Jildor)
+ Copyright (C) Rinsewind (https://github.com/Rinsewind)
+ Copyright (C) Evef (https://github.com/Evef)
+ Copyright (C) Jar (https://github.com/JarDv)
+ Copyright (C) Saitama (https://github.com/cagoncevatt)
+ Copyright (C) Efreet (https://github.com/Efreet)
+ Copyright (C) Hyxon (https://github.com/Hyxon)
+ Copyright (C) Morthos (https://github.com/Mortos)
+ Copyright (C) ReanEmu (https://github.com/ComunidadRean/ReanEmu)
 
-TrinityCore is a MMORPG Framework based mostly on C++. It is completely 
-open source, and is community supported. It is derived
-from MaNGOS, the Massive Network Game Object Server, and is based on the
-code of that project with extensive changes over time to optimize, improve
-and cleanup the codebase at the same time as improving the ingame mechanics
-and functionality. If you wish to contribute ideas or code please visit 
-our site linked below or make pull requests to our github repo at 
-https://github.com/TrinityCore/TrinityCore
 
-For further information on the TrinityCore project, please visit our
-project website at http://www.TrinityCore.org
 
-Documentation including installation instructions can be found inside
-the doc directory.
+ReanEmu posee muchos fixes y mejoras a base de algunos repos y autores muy
+conocidos además de los nuestros propios, este documento detalla los componentes,
+parches y/o código que contiene dentro este emulador de manera resumida:
 
-SQL files to create the database can be found in the sql directory. Files
-to update your database from an older revision/version can be found in the
-sql/updates directory.
+#########
+#ReanEmu#
+#########
+Milestone0.0: Adicion de codigo utilitario en general para complemento del nucleo 
+              y funciones de soporte.
+Milestone1.0: Jugabilidad en general, adecuaciones de codigo vario en mapas
+              comportamiento de bgs, arenas, players-units-pets y mejoras.
+Milestone2.0: Mejoras en Instances, dungeons y mapasPVP, para darles funcionalidad
+              y detalles para tenerlas lo mas cercano a blizzlike, solucion de bugs
+              relativos a las mismas, implementacion de nuevas scripts, prioridad cata.
+Milestone3.0: Arreglos a Spells, sobre todo para estabilidad del pve y del
+              pvp dentro de los reinos.
+Milestone4.0: Arreglos en quests, y cadenas de mision, esto incluye scripts
+              en C++ y SmartAI.
+Milestone5.0: Traducciones, e inclusion de varios dentro de tablas y strings
+              del emulador, ya sea en c++ o en sqls.
+Milestone6.0: Arreglos en eventos de mundo, logros y varios, con SAI, c++ y sql para
+              items, criaturas, spells, etc. Que no encajen en las demas milestones.
+Milestone7.0: Código custom, utilitario y caracteristicas interesantes varias.
 
-TrinityCore Requirements
-Platform: Linux, Windows or Mac
-Processor with SSE2 support
-ACE ≥ 5.8.3
-MySQL ≥ 5.1.0
-CMake ≥ 2.8.0
-OpenSSL ≥ 0.9.8o
-GCC ≥ 4.3 (Linux only)
-MS Visual Studio ≥ 9 (2008) (Windows only)
+############################
+# Trintitycore compatible: #
+############################
+
+
+###############
+# Adicionales #
+###############
+0.1  - 16/06/2014: Añadido dumpeo de las DBs con los updates incluidos por Evef
+0.2  - 17/06/2014: Modificado el logo de arranque con el nombre de ReanEmu por Evef
+0.3  - 24/08/2014: Añadiendo campos faltantes en la db Chars por Evef
+0.4  - 24/08/2014: Organizando updates y añadiendo tools para mergear sql por Evef
+0.5  - 06/09/2014: Core/SmartAI: SMART_ACTION_MOVE_TO_POS implementadas posiciones relativas al target por Lauja
+0.6  - 06/09/2014: Core/SmartAI: SMART_ACTION_GO_SET_GO_TYPE implementada por Muzashi
+0.7  - 12/09/2014: Core/SmartAI: MOVING_IN_FORMATION definido de forma implícita en el ACTION_FOLLOW  donde sea  Action_param1 == 0 por Jar
+0.8  - 14/09/2014: Core/RBAC: Movidos todos los comandos al sistema RBAC y ajustados por grupos por Evef
+0.9  - 15/09/2014: Core: Implementado GetEnchantmentList por Naios
+0.10 - 09/11/2014: Core/BG: Fix para que no salga el cartel de anotar a BG cada vez que logueas o subes de nivel por Gooyeth y modificado por Morthos
+0.11 - 17/09/2014: Core/Quest: Los Game Object de misiones que requieran el uso del mismo, se deshabilitaran al ser completado el objetivo que lo involucra por Jar
+0.12 - 21/09/2014: Core/CreatureText: Implementado rango de texto individual por Muzashi
+0.13 - 21/09/2014: Core/SmartAI: Solucionado problema al iniciar los waypoint path de un npc que haya cumplido otro path con anterioridad por Jar
+0.14 - 21/09/2014: Core/Object: Las criaturas invisibles no son detectables por Muzashi y modificado por Gildor
+0.15 - 22/09/2014: Core/BG: Overload a AddSpiritGuide() para un proximo cleanup en los scripts por Morthos
+0.16 - 23/09/2014: Core: Implementado m_appliedAuraMutex por WoWSource434
+0.17 - 23/09/2014: Core: Implementado NeedsSpecialTreatment por WoWSource434
+0.18 - 23/09/2014: Core: Implementado appliedAurasList por WoWSource434
+0.19 - 29/09/2014: Core/GameObject: Los spellfocus despameados no son detectables por Muzashi
+0.20 - 16/10/2014: External Mail: Añadido external mail por Varios
+0.21 - 17/10/2014: DB/logon: Actualizada la tabla  logonlist solución de conexión en  DebugMode por Jar
+0.22 - 20/10/2014: AddNPCPassengerInInstance mejorada, evitando posibles crashes por Eilo
+0.23 - 20/10/2014: CMake: Timestamp y core revision ahora se generan correctamente por Jar
+0.25 - 22/10/2014: Cmake/Mscv: Permitiendo que se pueda generar el proyecto para versiones de visual studio2010 y anteriores por Eilo
+0.26 - 22/10/2014: Basicos: El proyecto se llama ReanEmu434, difiriendo el nombre para los que tenemos el proyecto ReanEmu ya definido para 335a por Eilo
+0.27 - 23/10/2014: Chat: Eliminando los colores custom de los GM en los canales por Evef
+0.28 - 28/10/2014: Authserver: Modificada la tabla realmlist para no superponer con otro authserver por Evef
+0.29 - 28/10/2014: LogonServer: Cambiando nombre de Caroline y traduciendo mensajes por Evef
+0.30 - 02/11/2014: CoreDebug: Sacando de raiz problemas al compilar con la opcion CoreDebug por Jar
+0.31 - 03/11/2014: Groups: Al desconectar no sacará de grupo por Evef
+0.33 - 10/11/2014: Core/LFG: Corregido el valor del itemlevel que mostraba el LFG por Jar
+0.35 - 14/11/2014: Core/LFG: Soporte recompensa de mazmorra después de una caída si se había ingresado en modo random por Jar
+0.36 - 17/11/2014: LogonServer: Cambiado el opcode CMSG_MESSAGECHAT_AFK a un manejo compartido por world y logon, haciendo que el Player::ToggleAFK serverside saque al jugador del bg al ser flaggeado por Morthos 
+0.37 - 18/11/2014: CrashFix: Corregido crash al tratar de comprobar si los jugadores pertenecen a un grupo de hermandad por Jar
+0.38 - 29/11/2014: Core/Tickets: Actualizado el sistema de ticket response por Eilo, modificado por Evef
+0.39 - 04/12/2014: Core: Modificado aura SPELL_AURA_OVERRIDE_SPELL_POWER_BY_AP_PCT (Chaman - Mental Quickness), ahora al cambiar de talentos, no se quedará el residuo del aura por WoWSource434 y modificado por Gildor
+0.40 - 16/12/2014: Core/Conditions: Añadido soporte para logros de hermandad por Evef
+0.41 - 02/01/2014: Core/GameMaster: Corrigiendo logica en los nombres y return de funcion por Evef
+0.42 - 12/01/2015: Battleground/Arenas: Solucionado exploit de Alt+F4 por Evef
+
+
+###############
+# Jugabilidad #
+###############
+1.1 - 31/08/2014: Core/AI: Corregido el problema donde el hook OnQuestAccept no era llamado con misiones de auto completar por Discover adaptado por Jar
+1.2 - 31/08/2014: Core/Quest: Corregido el icono de misiones diarias que se muestra sobre los NPC cuando ya han sido completadas por el jugador por Shauren adaptado por Jar
+1.3 - 31/08/2014: Core/Entities: Ahora los jugadores podrán interactuar con los Game Object tipo QuestGiver cuando tengan que tomar o entregar una misión por Joschiwald adaptado y corregido por Jar
+1.4 - 01/08/2014: Core/Movement: Implementada la propiedad SPELL_INTERRUPT_FLAG_MOVEMENT cuando se canalizan spells por Jar
+1.5 - 05/09/2014: Core/SpellAreas: las auras se recalculan correctamente con el cambio de QuestStatus por Muzashi
+1.6 - 08/09/2014: Core/Etities: Las unidades mecanicas pueden ser objectivo de spells para reparar o regenerar vida dependiendo del caster por Jar
+1.7 - 12/09/2014: Core/AI: Los NPC especiales como los QuestGiver no cancelaran su movimiento al interactuar con ellos mientras tengan un BasicEvent activo por Jar
+1.8 - 21/09/2014: Fix exploit eat/drink in mount por Gildor
+1.9 - 21/09/2014: Core/Movement: Corregido MoveKnockBack cuando la velocidad en XY es cero por Muzashi
+1.10 - 29/08/2014: BG/IoC: Ahora se checa si la base esta conquistada, en conflicto o neutral por Morthos
+1.11 - 22/09/2014: BG/IoC: Reparados los transportadoes de la fortaleza por joschiwald adaptado por Morthos
+1.12 - 22/09/2014: BG/IoC: Agregado el VehicleId faltante al Siege Engine para poder ser utilizado por Morthos
+1.13 - 01/10/2014: Core/Movement: Añadida la consideración del HoverHeight en la posición Z del TargetMovementGenerator si el mob tiene MOVEMENTFLAG_DISABLE_GRAVITY por Saitama
+1.14 - 23/09/2014: BG/IoC: Corregido el spawn/despawn de los Spirit Guides al capturar las bases por Morthos
+1.15 - 28/09/2014: Core/Vehicles: Varios updates a templates, conditions, etc relacionados con vehiculos por Joschiwald adaptado por Morthos
+1.16 - 05/10/2014: Core/Spell: corregida la condición en el casteo de un aura SPELL_AURA_PERIODIC_MANA_LEECH para permitir que sea usada por un npc sin target por Saitama
+1.17 - 16/10/2014: Core/LFG: Corregido los currency de las quest del LFG por Evef
+1.18 - 20/10/2014: Evitando crashes del IntersectRay por Eilo
+1.19 - 20/10/2014: Evitando crashes en el Unload del mapa, esto pasa frecuentemente aunque tengas unloadgrid = 0 por Eilo
+1.20 - 20/10/2014: Evitando crashes en el UpdateUnderWaterState por ubicaciones no optimizadas por Eilo
+1.21 - 20/10/2014: Crashfix de SelectImplicitAreaTargets por blipi
+1.22 - 20/10/2014: Avoiding some pet charm execution leading to crashes by Avalonfr
+1.23 - 21/10/2014: Desactivacion temporal de HandleQuestConfirmAccept Por Eilo y Evef
+1.24 - 21/10/2014: Core/Graveyards: Modificando el valor Z de los GraveYard Zone cuando el player es teleportado, asegurando no caiga bajo el mapa por Jar
+1.25 - 22/10/2014: Canales: Deshabilitando el SendToAll() posibles crasheos ademas de spamear el chat por Eilo
+1.26 - 22/10/2014: Canales: Evitando que pongan password al canal por Eilo
+1.28 - 23/10/2014: Canales: Desactivando el JoinNotify y el LeaveNotify spameo de paquetes por Eilo
+1.30 - 28/10/2014: Clustering: Deshabilitando temporalmente parte de la reconexion de nodos, posible causa de freezeos por Eilo
+1.31 - 29/10/2014: Clustering: Corregido funcionalidades del ClientSession::UpdateMulti para ejecutar adecuadamente el socketing y sessioning por Eilo
+1.33 - 03/11/2014: Fix Double Stacking Auras por Tobmaps y modificado por Gildor
+1.34 - 09/11/2014: Core/BG: Corregidas los puntos de las recompensas del buscador de campo de batalla y ajustadas para que sean configurables por Morthos
+1.35 - 09/11/2014: Core/BG: Incrementado el numero minimo de jugadores en BFG y TP por Morthos
+1.36 - 11/11/2014: Core/LFG: Ahora se aplicara Dungeon CoolDown cuando el jugador selecciona la opcion Random por Jar
+1.37 - 15/11/2014: Core/LFG: Ahora es  posible salir de la mazmorra utilizando el ojo y la opción de salir por Jar
+1.38 - 16/11/2014: Core/LFG: Ahora es posible expulsar miembros del grupo con la opcion votar para expulsar por Jar
+1.39 - 18/11/2014: Core/Currency: Modificado el sistema de currencies y añadido al limite semanal los currency de boss por Evef
+1.40 - 18/11/2014: Core/Currency: Añadidas las currencies a la tabla creature_onkill_currency por Evef
+1.41 - 18/11/2014: Core/Guild: Ya no se podrá invitar si pertenece a una hermandad por Evef
+1.42 - 19/11/2014: Core/Arenas: Ya no se reiniciara el cd de las spells que le queden 10 o mas minutos por Evef
+1.43 - 08/12/2014: Core/Pets: Fix exploit que algunas pets obtenian spells de creature template por Jar y Gildor
+1.44 - 21/12/2014: Player/ItemSet: Ahora se aplica los bonus de set correspondientes cuando el jugador loguea en el mundo por Jar
+1.45 - 26/12/2014: BG/BFG: Cambiado el codigo que causaba el comportamiento anormal con jugadores siendo enviados a cementerios incorrectos y tal, tambien algo de codestyle y limpieza en los archivos en general por Morthos
+1.46 - 11/01/2014: BG/TP: Ahora las banderas de Cumbres Gemelas pueden ser recuperadas/recapturadas como corresponda por Morthos
+1.47 - 11/01/2014: BG/EY: Corregido el flag que causaba que la bandera de Ojo de la Tormenta no pudiera ser recapturada al ser droppeada por el portador por Morthos
+
+
+########################
+# Dungeons e Instances #
+########################
+ - 2.1 ThroneOfTheTides -
+2.1.1 - 12/10/2014: Lady Naz'Jar & Commander Ulthok doors working por Muit
+2.1.2 - 13/10/2014: Teleporters working and enabled correctly por Muit
+2.1.3 - 13/10/2014: Lady Naz'Jar casts Shock Blast. Corrected heroic damage too por Muit
+2.1.4 - 14/10/2014: Ozumat won't fall again when spawned & can't enter combat until his phase starts por Muit
+2.1.5 - 15/10/2014: Ozumat entering combat correctly por Muit
+2.1.6 - 15/10/2014: Cinematic movements, trigger fixes & Ozumat combat por Muit
+2.1.7 - 24/10/2014: Mindebender Ghursha: Fixed mind fog spell por Muit
+2.1.8 - 25/10/2014: ThroneOfTheTides: Ulthok's Dark Fissure spell fixed por Muit
+2.1.9 - 28/12/2014: ThroneOfTheTides: Corregidos los spawn de ozumat por Evef
+2.1.10 - 28/12/2014: ThroneOfTheTides: Ajustado el timer de la phase 1 de ozumat por Evef
+2.1.11 - 28/12/2014: ThroneOfTheTides: Neptulon será atacado por los adds al summonearlos por Evef
+2.1.12 - 12/01/2015: ThroneOfTheTides: Corregido el funcionamiento de los Adds HC de Ozumat por Evef
+2.1.13 - 12/01/2015: ThroneOfTheTides: Corregidas las flags de Ozumat en hc por Evef
+2.1.14 - 12/01/2015: ThroneOfTheTides: Añadido el loot al Comandante Ulthok en normal por Hyxon
+2.1.15 - 12/01/2015: ThroneOfTheTides: Añadido el loot al Dominamentes Ghursha en ambas dificultades por Hyxon
+2.1.16 - 12/01/2015: ThroneOfTheTides: Añadido el loot a Lady Naz'Jar en ambas dificultades por Hyxon
+2.1.17 - 12/01/2015: ThroneOfTheTides: Ahora los jefes en dificultad heroica darán emblemas de justicia por Hyxon
+2.1.18 - 12/01/2015: ThroneOfTheTides: Ahora los jefes darán oro en ambas dificultades por Hyxon
+2.1.19 - 12/01/2015: ThroneOfTheTides: Añadidas las inmunidades en dificultad heroica a Dominamentes Ghursha por Hyxon
+2.1.20 - 12/01/2015: ThroneOfTheTides: Añadidas las inmunidades en dificultad heroica a Lady Naz'Jar por Hyxon
+2.1.21 - 12/01/2015: ThroneOfTheTides: Añadidas las inmunidades en dificultad heroica a Comandante Ulthok por Hyxon
+2.1.22 - 12/01/2015: ThroneOfTheTides: Añadidas las inmunidades en ambas dificultades a Ozumat por Hyxon
+ - 2.2 BlackrockCaverns -
+2.2.1 - 14/12/2014: Corla, Heraldo del Crepúsculo eliminada la inmunidad a interrumpir en ambas dificultades por Hyxon
+ - 2.3 TheStonecore -
+ - 2.4 TheVortexPinnacle -
+2.4.1 - 30/09/2014: GrandVizierErtan corregido el funcionamiento de Storm's Edge mientras contrae su escudo de ciclones por Saitama
+2.4.2 - 01/10/2014: Altairus corregida la mecánica de los tornados en el modo heroico por Saitama
+2.4.3 - 01/10/2014: Altairus corregida la mecánica de Call the Wind dándole un aspecto más blizzlike por Saitama
+2.4.4 - 01/10/2014: Altairus correcciones visuales del boss en modo normal y heroico para un aspecto más blizzlike por Saitama
+2.4.5 - 02/10/2014: Asaad evitando que deje perseguir al tank luego de usar Supremacy of the Storm por Saitama
+2.4.6 - 03/10/2014: Asaad retocados aspectos visuales durante Supremacy of the Storm para un efecto más blizzlike por Saitama
+2.4.7 - 03/10/2014: Asaad evitando que la mecánica de Supremacy of the Storm falle por el cast de Chain Lightning por Saitama
+2.4.8 - 03/10/2014: Asaad corregido el fallo que podía dejar el REACT_STATE_PASSIVE al wipear por Saitama
+2.4.9 - 03/10/2014: Asaad traducidos los creature_text por Saitama
+2.4.10 - 11/11/2014: Asaad fixeado el daño que hacia el primer tick cuando se estaba dentro del campo seguro por Efreet y Saitama
+2.4.10 - 29/10/2014: Corregidos detalles del Trashmob por Hyxon
+2.4.11 - 31/10/2014: Insertado el loot de los trashmob (normal y heroico) de La Cumbre del Vórtice por Eissesh
+ - 2.5 LostCityOfTheTol'vir -
+2.5.1 - 03/11/2014: Permitiendo que Augh sea targeteable para acceder al botín de Cierrafauce Hyxon
+2.5.2 - 15/12/2014: Cierrafauce ahora lanzará la habilidad Aroma de Sangre a un solo objetivo del grupo en ambas dificultades por Hyxon y Efreet
+2.5.3 - 23/12/2014: Siamat ahora al usar Wailing Winds no se aggrearán los demás mobs de la instance por Saitama
+2.5.4 - 23/12/2014: Siamat reparado el funcionamiento de Thunder Crash de Servant of Siamat por Saitama
+2.5.5 - 27/12/2014: Lockmaw/Augh: corregido el filtrado de targets en la spell paralytic blow dart por Jar
+ - 2.6 GrimBatol -
+2.6.1 - 29/10/2014: Corregido el loot del trashmob por Eissesh y Hyxon
+2.6.2 - 31/10/2014: Corregido el daño y vida del trashmob por Hyxon
+2.6.3 - 11/11/2014: Erudax: Corregido el daño que el boss hace en la spell Shadow Gale de forma que ahora en el ojo del huracan no golpee por Efreet y Saitama
+ - 2.7 HallsOfOrigination -
+2.7.1 - 17/12/2014: HallsOfOrigination: Rework completo de la mazmorra por Evef y Hyxon
+2.7.2 - 23/12/2014: TempleGuardianAnhuur ahora usará Divine Reckoning sobre un jugador al azar por Saitama
+2.7.3 - 24/12/2014: TempleGuardianAnhuur ajustados algunos aspectos visuales del encuentro intentando un aspecto más blizzlike por Saitama
+2.7.4 - 24/12/2014: TempleGuardianAnhuur ahora se podrá interrumpir Reverberating Hymn por Saitama
+2.7.5 - 24/12/2014: TempleGuardianAnhuur corregido el comportamiento durante Reverberating Hymn para que sea blizzlike por Saitama
+2.7.6 - 24/12/2014: TempleGuardianAnhuur añadido script y corregido el comportamiento de Pit Viper para que sea más blizzlike por Saitama
+2.7.7 - 28/12/2014: EarthragerPtah ahora atacará correctamente y realizará el cambio de fase por Saitama
+2.7.8 - 28/12/2014: Añadido script a los mobs Dustbone Horror por Saitama
+2.7.9 - 28/12/2014: Añadido script a los mobs Jeweled Scarab por Saitama
+2.7.10 - 28/12/2014: EarthragerPtah corregido el comportamiento del npc y la spell Quicksand por Saitama
+2.7.11 - 29/12/2014: EarthragerPtah corregida la cantidad y posición de invocación de Jeweled Scarab durante el encuentro por Saitama
+2.7.12 - 03/01/2015: EarthragerPtah añadido un minuto de duración a la fase de dispersión por Saitama
+2.7.13 - 03/01/2015: EarthragerPtah corregido react state durante la fase de dispersión por Saitama
+2.7.14 - 07/01/2015: EarthragerPtah añadido el Tumultuous Earthstorm en la dificultad heroica por Saitama
+2.7.15 - 08/01/2015: EarthragerPtah añadida condición para evitar que al matar los Dustbone Horror sin relación al encuentro influyan en la fase de dispersión por Saitama
+2.7.16 - 09/01/2015: Corregidos los gossips de Brann Bronzebeard tanto en la entrada a Vault of Lights como en el tercer piso de la Dungeon por Saitama
+2.7.17 - 09/01/2015: Anraphet corregidos los checks para verificar la activación del boss por Saitama
+2.7.18 - 10/01/2015: Anraphet asegurando que vuelva a activarse luego de un reinicio de la mazmorra por Saitama
+2.7.19 - 10/01/2015: Anraphet realizadas algunas correcciones en el evento de intro por Saitama
+ - 2.8 TheDeadMinesH -
+2.8.1 - 30/11/2014: Añadidos el difficulty entry a los NPC de Deadmines para que puedan spawnearse en dificultad heroica por Hyxon
+2.8.2 - 30/11/2014: Corregidos niveles/daños/facciones/detalles blizzlike de los NPC de Deadmines por Hyxon
+2.8.3 - 30/11/2014: Asignados su script a los correspondientes NPC de Deadmines por Hyxon
+2.8.4 - 03/12/2014: Agregados los NPC a Deadmines normal y heroico por Hyxon
+ - 2.9 ShadowFangKeepH -
+ 2.9.1 - 31/10/2014: Corregidos detalles/facciones/daños/niveles del trashmob por Hyxon
+2.9.2 - 14/12/2014: Baron Ashbury eliminada la inmunidad a interrupciones en normal y heroico por Hyxon
+ - 2.10 Zul'Aman -
+ - 2.11 Zul'Gurub -
+ - 2.12 EndTime -
+ - 2.13 WellOfEternity -
+2.13.1 - 07/11/2014: Añadidos spawns a la mazmorra en dificultad heroica por NorthStrider y Hyxon
+ - 2.14 HourOfTwilight -
+ - 2.15 BaradinHold -
+ 2.15.1 - 19/11/2014: BaradinHold: Desactivado el check de faccion defensora para que ambas pueda entrar por Evef
+ - 2.16 TheBastionOfTwilight -
+2.16.1 - 29/10/2014: Corregido el loot del Trashmob por Eissesh y Hyxon
+2.16.2 - 05/11/2014: Crashfix: Problema al trabajar con listas sin ordenar por Jar
+2.16.3 - 06/11/2014: Corregidos daños/vidas/spells/facciones en dificultad 25 por Hyxon
+2.16.4 - 15/12/2014: Monstruosidad de Elementium Machaque de Gravedad ahora golpeará a un jugador en 10N y 10HC y a tres en 25N y 25HC por Hyxon
+2.16.5 - 23/12/2014: ChoGall ahora invocará un Corrupting Adherent en su dificultad 25 jugadores normal por Saitama
+ - 2.17 ThroneOfTheFourWinds -
+2.17.1 - 05/10/2014: ConclaveOfWind el efecto de Ice Patch de Nezir no debe tener stacks diferentes para cada zona de hielo por Saitama
+2.17.2 - 05/10/2014: ConclaveOfWind el efecto de Toxic Spores de los Ravenous Creepers invocados por Anshal no debe tener stacks diferentes por cada caster por Saitama
+2.17.3 - 05/10/2014: ConclaveOfWind removidos Talk sobrantes del encuentro por Saitama
+2.17.4 - 05/10/2014: ConclaveOfWind removidos MovementExpired sin utilidad real por Saitama
+2.17.5 - 05/10/2014: ConclaveOfWind los miembros del cónclave solo deben aggrearse si son atacados por Saitama
+2.17.6 - 05/10/2014: ConclaveOfWind añadido el Encounter Unit Frame cuando los jugadores inician el encuentro por Saitama
+2.17.7 - 05/10/2014: ConclaveOfWind removida spell que podía causar fallos en la animación de los bosses por Saitama
+2.17.8 - 05/10/2014: ConclaveOfWind corregido el momento en que el estado del GameObject relacionado a cada boss debe cambiar por Saitama
+2.17.9 - 05/10/2014: ConclaveOfWind al derrotar a uno de los miembros éste debe mantenerse seleccionable por Saitama
+2.17.10 - 05/10/2014: ConclaveOfWind corregidos algunos aspectos del momento de la derrota de un miembro del cónclave para que sea blizzlike por Saitama
+2.17.11 - 05/10/2014: ConclaveOfWind asegurando el valor máximo de energía que pueden tener Anshal, Nezir y Rohash por Saitama
+2.17.12 - 06/10/2014: ConclaveOfWind evitando que Nezir interrumpa el cast de Permafrost si su objetivo se aleja por Saitama
+2.17.13 - 06/10/2014: ConclaveOfWind al finalizar el cast de Gather Strength el miembro del cónclave debe volverse atacable nuevamente por Saitama
+2.17.14 - 06/10/2014: ConclaveOfWind un miembro del cónclave solo debe volverse hostil contra un jugador que entra en la plataforma cuando no está utilizando Gather Strength por Saitama
+2.17.15 - 07/10/2014: ConclaveOfWind reparada la mecánica y funcionamiento de la spell Wind Blast de Rohash por Saitama
+2.17.16 - 08/10/2014: ConclaveOfWind añadido el uso de Storm Shield a Rohash en la dificultad heroica por Saitama
+2.17.17 - 09/10/2014: ConclaveOfWind reparado el funcionamiento de las auras de cada miembro del cónclave cuando no hay jugadores en su respectiva plataforma en las dificultades faltantes por Saitama
+2.17.18 - 11/10/2014: ConclaveOfWind modificada la manera en que se controlan y realizan las spells Ultimate de los miembros del cónclave por Saitama
+2.17.19 - 11/10/2014: ConclaveOfWind retocados los timers de Toxic Spores por Saitama
+2.17.20 - 11/10/2014: ConclaveOfWind añadido el quote inicial al atacar a un miembro del cónclave por Saitama
+2.17.21 - 17/10/2014: ConclaveOfWind activando correctamente los Slipstreams que llevan a la plataforma de Al'akir al acabar el encuentro por Saitama
+2.17.22 - 17/10/2014: Al'akir asignado script de la spell Electrocute por Saitama
+2.17.23 - 17/10/2014: Al'akir asignado script al Lightning Strike Trigger por Saitama
+2.17.24 - 18/10/2014: Al'akir corregido el funcionamiento de Lightning Strike en todas las dificultades por Saitama
+2.17.25 - 18/10/2014: Al'akir usando un método más seguro para el correcto reinicio del encuentro al wipear por Saitama
+2.17.26 - 18/10/2014: Al'akir mejorada la mecánica de Ice Storm para que sea más blizzlike por Saitama
+2.17.27 - 05/11/2014: Al'akir añadido efecto de ambiente blizzlike durante la segunda y tercera fase por Saitama
+2.17.28 - 05/11/2014: Dado un efecto más blizzlike al usar un Slipstream para llegar a la plataforma de Al'akir por Saitama
+2.17.29 - 06/11/2014: Al'akir correcciones del npc Stormling Pre-effect por Saitama
+2.17.30 - 06/11/2014: Al'akir reparado el funcionamiento de Feedback en todas las dificultades por Saitama
+2.17.31 - 06/11/2014: Al'akir añadido tiempo de activación a Stormling por Saitama
+2.17.32 - 07/11/2014: Al'akir corregido el stack del aura de los Stormling en la dificultad heroica por Saitama
+2.17.33 - 10/11/2014: Al'akir reparada la mecánica y funcionamiento de Squall Line por Saitama
+2.17.34 - 10/11/2014: Al'akir corregidos los flags de Ice Storm por Saitama
+2.17.35 - 20/11/2014: Al'akir corregido el knockback al acabarse el efecto de Squall Line por Saitama
+2.17.36 - 20/11/2014: Al'akir el Squall Line debe poder atrapar a jugadores aunque ya haya atrapado a otro antes por Saitama
+2.17.37 - 21/11/2014: Al'akir evitando que los Squall Line usen ataques melee por Saitama
+2.17.38 - 21/11/2014: Al'akir ajustado radio visual de Lightning Strike intentando que sea más blizzlike por Saitama
+2.17.39 - 07/12/2014: Implementada le mecánica de Catch Fall para devolver a los jugadores a las plataformas por Saitama
+2.17.40 - 10/12/2014: Al'akir implementado evento de transición blizzlike de la tercera fase por Saitama
+2.17.41 - 10/12/2014: Al'akir corregida la altura del movimiento de los Squall Line por Saitama
+2.17.42 - 11/12/2014: Al'akir corregido el fallo en el reinicio por Saitama
+2.17.43 - 11/12/2014: Al'akir añadido límite visual a los extremos de Lightning Strike para un aspecto más blizzlike por Saitama
+2.17.44 - 11/12/2014: Al'akir corregida la cantidad de targets de Lightning Strike por Saitama
+2.17.45 - 11/12/2014: Al'akir ahora Wind Burst removerá y aplicará Eye of the Storm correctamente durante la tercera fase por Saitama
+2.17.46 - 11/12/2014: Al'akir corregido el funcionamiento de la spell Lightning de la tercera fase por Saitama
+2.17.47 - 11/12/2014: Al'akir agregado Berserk de nueve minutos por Saitama
+2.17.48 - 13/12/2014: Al'akir implementada la mecánica de Lightning Clouds de la tercera fase por Saitama
+2.17.49 - 13/12/2014: Al'akir añadido el uso de Lightning Rod durante la tercera fase por Saitama
+2.17.50 - 20/12/2014: Al'akir implementado el funcionamiento de Relentless Storm durante la tercera fase por Saitama
+2.17.51 - 20/12/2014: Al'akir los Stormling deben poder volar para alcanzar a los jugadores durante la tercera fase por Saitama
+2.17.52 - 20/12/2014: Al'akir durante la tercera fase la mecánica de Catch Fall no debe activarse por Saitama
+2.17.53 - 21/12/2014: Al'akir añadida aura para evitar que los jugadores permanezcan en el círculo interno de la plataforma por Saitama
+2.17.54 - 27/12/2014: Al'akir añadidas conditions a la spell Berserk de la tercera fase por Saitama
+ - 2.18 BlackwingDescent -
+2.18.1 - 29/10/2014: Corregido el loot del Trashmob por Eissesh y Hyxon
+2.18.2 - 14/11/2014: Omnotron Defense System Modificada la vida de los NPC Poison Bomb por Hyxon
+2.18.3 - 03/12/2014: Maloriak modificada la velocidad de movimiento de las aberraciones por Hyxon
+2.18.4 - 03/12/2014: Maloriak al derrotar al jefe también desaparecerán aberraciones y Sujetos Principales por Hyxon
+2.18.5 - 14/12/2014: Omnotron Defense System Arcanotron eliminadas las inmunidades a interrumpir por Hyxon
+2.18.6 - 14/12/2014: Omnotron Defense System ahora activaran sus escudos al 45% de energía por Hyxon
+2.18.7 - 23/12/2014: Chimaeron ahora se removerá correctamente el debuff Mortality al acabar el encuentro por Saitama
+ - 2.19 Firelands -
+ - 2.20 DragonSoul -
+
+
+###############################
+# Hechizos, Glifos y Talentos #
+###############################
+ - 3.1 DK -
+3.1.1  - 12/08/2014: DK: Fix spell Chilblains, ahora no aplicará su efecto al caster al entrar al juego por Gildor
+3.1.2  - 12/08/2014: DK: Fix spell Chilblains, ahora inmovilizará al objetivo al usar Chains of Ice por Subv y modificado por Gildor
+3.1.3  - 13/08/2014: DK: Fix spell Scarlet Fever, ahora no aplicará su efecto al caster al entrar al juego por Gildor
+3.1.4  - 09/09/2014: DK: Fix spell Claw (Pet), ahora reservará 40 pts de energy en auto-cast por Mauvas
+3.1.5  - 09/09/2014: DK: Fix spell Dark Transformation por Gildor
+3.1.6  - 09/11/2014: DK: Fix crash al usar /script PetAbandon() con el necrófago por Gildor
+3.1.7  - 13/11/2014: DK: Fix spell Blood rites, ahora no se quedaran las runas de muerte al perder dicho aura (previene crash restorebaserune) por Gildor
+3.1.8  - 17/11/2014: DK: Fix spell Pestilence, modificado script para prevenir crash por WoWSource434 y modificado por Gildor
+3.1.9  - 16/12/2014: DK: Fix spell Dark Simulacrum, previniendo que pueda usar spells que no debería por WoWSource434 y modificado por Gildor
+3.1.10 - 25/12/2014: DK: Fix spell Blood Parasite, ahora los Bloodworm no sanarán con cada golpe y explotarán sanando a los aliados cercanos un 10% de la vida del gusano por stack por Arkcore y modificado por Gildor
+3.1.11 - 27/12/2014: DK: Fix spell Blood Parasite, ahora los Bloodworm tendrán el 25% de la vida del DK por Gildor
+ - 3.2 Druid -
+3.2.1  - 18/07/2014: Druida: Fix spell Dreamstate, ahora aumentará la regeneración de maná de Innervate por Gildor
+3.2.2  - 19/07/2014: Druida: Fix spell Fungal Growth, ahora al morir los Treants o detonar los Wild Mushroom aparecerá Fungal Growth por Gildor
+3.2.3  - 25/10/2014: Druida: Fix Crash causado por la spell 29166 - Innervate al no existir el original caster por Jar
+3.2.4  - 18/12/2014: Druida: Fix spell Forma de vuelo presto, ahora solo se podrá aprender si tienes equitación a 300 y previniendo que el jugador se quede con Forma de vuelo presto si no tiene equitación a 300 por Gildor
+3.2.5  - 02/01/2015: Druida: Fix spell Starfall, ahora solo golperá a los objetivos que esten en combate por Gildor
+3.2.6  - 02/01/2015: Druida: Fix spell Pounce, ahora aplicará los segundos correspondientes, con el talento Brutal Impact incluido, y compartirá DR solo con Cheap Shot por Gildor
+ - 3.3 Hunter -
+3.3.1  - 29/07/2014: Hunter: Fix spell Move To (Pet), ahora se moverá al sitio indicado y se quedará allí esperando la pet hasta recibir una orden por Gildor
+3.3.2  - 16/09/2014: Hunter: Fix spell Improved Serpent Sting, ahora causará el daño correcto por WoWSource434 y modificado por Gildor
+3.3.3  - 18/09/2014: Hunter: Fix spell Camouflage por Gildor
+3.3.4  - 18/09/2014: Hunter: Fix spell Master's Call, ahora si la pet está muerta o atontada no aplicará el efecto por Gildor
+3.3.5  - 18/09/2014: Hunter: Fix spell Master's Call, ahora eliminará el efecto root al objetivo aunque la pet esté rooted por Gildor
+3.3.6  - 23/09/2014: Hunter: Corregida distancia de aparición de las trampas por Gildor
+3.3.7  - 25/10/2014: Hunter: Fix spell Kill Command, previniendo crash por Gildor
+3.3.8  - 02/11/2014: Hunter: Fix spells Cunning, Ferocity y Tenacity Marker (Pet), ahora no aumentarán el 25% de daño de la pet por Gildor
+3.3.9  - 02/11/2014: Hunter: Deshabilitando Hunter Tamed Spells Pasivas (Pet), evitando aumento de daño de las pets por Gildor
+3.3.10 - 28/11/2014: Hunter: Fix Spell Deterrence, ahora no se podrá usar al llevar la bandera en BG por Gildor
+3.3.11 - 03/01/2015: Hunter: Fix spell Camouflage, previniendo que la pet se quede con el aura (exploit) por Gildor
+ - 3.4 Mage -
+3.4.1  - 10/07/2014: Mago: Fix spell Frostfire Bolt, ahora aplicará la reducción de movimiento si no tiene el Glyph of Frostfire por Gildor
+3.4.2  - 22/09/2014: Mago: Fix spell Arcane Blast, ahora aplicará el buff al impactar con exito en el objetivo por Gildor
+3.4.3  - 23/09/2014: Mago: Fix spell Pyromaniac por WoWSource434 y modificado por Gildor
+3.4.4  - 27/09/2014: Mago: Fix Spell Reactive Barrier, ahora se aplicará correctamente por Gildor
+3.4.5  - 28/09/2014: Mago: Fix Spell Enduring Winter, ahora se aplicará al usar Frostbolt por Gildor
+3.4.6  - 30/09/2014: Mago: Fix spell Fingers of Frost, ahora funcionará con Frostfire Orb por Gildor
+3.4.7  - 30/09/2014: Mago: Fix spell Brain Freeze, ahora funcionará con Frostfire Orb por Gildor
+3.4.8  - 30/09/2014: Mago: Fix spell Frostfire Orb Override, ahora no se eliminará el aura pasados unos segundos por Gildor
+3.4.9  - 02/10/2014: Mago: Fix spell Piercing Chill, ahora aplicará su efecto a los objetivos adicionales correspondientes al realizar un golpe crítico con Frostbolt por WoWSource434, Bootz y modificado por Gildor
+3.4.10 - 14/11/2014: Mago: Fix Water Elemental, ahora tendrá la vida/maná correspondiente por Gildor 
+3.4.11 - 21/11/2014: Mago: Fix Mirror Image, ahora tendrá la vida/maná correspondiente por Gildor
+3.4.12 - 21/11/2014: Mago: Fix Mirror Image, ahora lanzarán las spells correspondientes por Gildor
+3.4.13 - 29/11/2014: Mago: Fix spell Arcane Potency, ahora se eliminará al cambiar de talentos por Gildor
+3.4.14 - 21/12/2014: Mago: Fix spell Ring of Frost, ahora no podrá ser reflejado por Gildor
+3.4.15 - 21/12/2014: Mago: Fix spell Ring of Frost, ahora aplicará su efecto aunque el caster este fuera de la línea de visión por Gildor
+3.4.16 - 21/12/2014: Mago: Deshabilitada spell Dalaran Brilliance por Gildor
+3.4.17 - 30/12/2014: Mago: Fix spell Frostfire Bolt, ahora si no tienes el glifo no se acumulará su efecto y causará daño en el tiempo por Gildor
+ - 3.5 Paladin -
+3.5.1  - 20/07/2014: Paladin: Fix spell Forbearance, ahora se aplicará al recibir Hand of Protection o Divine Shield por Gildor
+3.5.2  - 02/10/2014: Paladin: Fix spell Last word, ahora aumentará la probabilidad de crítico de Word of Glory por Bootz y modificado por Gildor
+3.5.3  - 02/10/2014: Paladin: Fix Spell Enlightened Judgements, ahora realizará el heal correcto por Gildor
+3.5.4  - 02/10/2014: Paladin: Fix Spell Enlightened Judgements, ahora proceara solo con Judgement por Xanvial
+3.5.5  - 01/01/2015: Paladin: Fix Spell Infusion of Light, ahora se eliminará el buff al castear las spells correspondientes por Gildor
+3.5.6  - 01/01/2015: Paladin: Fix spell Acts of Sacrifice, ahora no eliminará magias por Gildor
+3.5.7  - 01/01/2015: Paladin: Fix spell Acts of Sacrifice, ahora eliminará efectos de root o snare por WoWSource434 y modificado por Gildor
+ - 3.6 Priest -
+3.6.1  - 22/07/2014: Priest: Fix spell Shadowfiend, ahora atacará al target (evitndo problemas con otros summons que no muestran la barra de spells) por Gildor
+3.6.2  - 12/08/2014: Priest: Fix spell Serendipity, ahora funcionará con Flash Heal por Gildor
+3.6.3  - 21/08/2014: Priest: Fix spell Blessed Resilience, ahora aplicará el buff al recibir un daño mayor al 10% de su vida por Gildor
+3.6.4  - 21/08/2014: Priest: Fix spell Focused Will, ahora aplicará el buff al recibir un daño mayor al 10% de su vida por Gildor
+3.6.5  - 15/11/2014: Priest: Fix spell Palabra de poder: Barrera, ahora la barrera no se movera del sitio que se lance y sera inmune a combate de players o non-players por Efreet
+3.6.6  - 21/11/2014: Priest: Fix spell Chakra, ahora al cambiar talentos no se quedarán sus efectos (exploit) por Gildor
+3.6.7  - 11/01/2015: Priest: Fix spell Grace, ahora tambien funcionará con Heal por Gildor
+3.6.8  - 12/01/2015: Priest: Fix spell Prayer of Mending, ahora escalará su efecto con el SP del Priest por Gildor
+ - 3.7 Rogue -
+3.7.1  - 01/09/2014: Rogue: Fix spell Deadly Momentum, ahora refrescará Slice and Dice y Recuperate si se tienen activos por Gildor
+3.7.2  - 01/09/2014: Rogue: Fix spell Blackjack, ahora aplicará el efecto al eliminarse Sap del objetivo por Gildor
+3.7.3  - 14/11/2014: Rogue: Fix spell Vanish, previniendo crash (RemoveAurasByType) por Gildor
+3.7.4  - 26/12/2014: Rogue: Fix spell Kidney Shot, ahora compartirá DR con los stuns por Gildor
+3.7.5  - 02/01/2015: Rogue: Fix spell Cheap Shot, ahora solo compartirá DR con Pounce por Gildor
+3.7.6  - 04/01/2015: Rogue: Fix Spell Assassin's Resolve, ahora funcionará solo al tener equipadas dos dagas por Gildor
+ - 3.8 Shaman -
+3.8.1  - 12/07/2014: Chaman: Fix spell Ancestral Awakening, ahora funcionará con Greater Healing Wave por Gildor
+3.8.2  - 29/07/2014: Chaman: Fix spell Totemic Wrath, ahora aplicará su efecto al invocar totems de fuego y no cualquier totem por Gildor
+3.8.3  - 15/09/2014: Chaman: Fix spell Frozen Power, ahora congelará a los enemigos alcanzados por Frost Shock que estén a más de 15 yardas por WoWSource434 y modificado por Gildor
+3.8.4  - 15/09/2014: Chaman: Fix Spell Unleash Elements, ahora funcionará con Frostbrand Weapon por Naios y modificado por Gildor
+3.8.5  - 20/11/2014: Chaman: Fix spell Fulmination, previniendo crash por Gildor
+3.8.6  - 05/01/2015: Chaman: Fix spell Stormstrike, ahora no se reemplazará si otro chaman ya habia aplicado Stormstrike al objetivo por WoWSource434 y modificado por Gildor
+3.8.7  - 05/01/2015: Chaman: Fix spell Unleash Elements, ahora no golpeará a objetivos amistosos con el efecto Frostbrand Weapon por Gildor
+ - 3.9 Warlock -
+3.9.1  - 09/09/2014: Brujo: Fix spell Drain Soul, ahora recuperará 3 fragmentos de alma al matar un objetivo que proporcione experiencia u honor por Gildor
+3.9.2  - 06/10/2014: Brujo: Fix spell Shadowburn, ahora recuperará 3 fragmentos de alma al matar un objetivo que proporcione experiencia u honor por Gildor
+3.9.3  - 07/10/2014: Brujo: Fix spell Demonic Rebirth, ahora aplicará el efecto correspondiente al morir el demonio por WoWSource434 y modificado por Gildor
+3.9.4  - 09/10/2014: Brujo: Fix spell Aura of Foreboding, ahora Hand of Gul'dan aplicará los efectos correspondientes por WoWSource434 y modificado por Gildor
+3.9.5  - 11/10/2014: Brujo: Fix spell Soulburn, ahora al tener activo Soulburn y lanzar Searing Pain será crítico por Gildor
+3.9.6  - 11/10/2014: Brujo: Fix spell Improved Searing Pain, ahora tendrá el % de crítico cuando el objetivo tenga la vida por debajo del 25% por WoWSource434 y modificado por Gildor
+3.9.7  - 15/11/2014: Brujo: Fix spell Jinx, ahora Curse of the Elements tendrá un maximo de 15 targets, previniendo crash por WoWSource434 y modificado por Gildor
+3.9.8  - 19/11/2014: Brujo: Fix spell Jinx, modificado script Curse of Weakness para prevenir crash por WoWSource434 y modificado por Gildor
+3.9.9  - 27/12/2014: Brujo: Fix spell Siphon Life, ahora curará solo al causar daño con Corrupción por Gildor
+3.9.10 - 05/01/2015: Brujo: Fix spell Conflagrate, ahora solo funcionará con Immolate por WoWSource434
+3.9.11 - 07/01/2015: Brujo: Fix spell Drain Life, previniendo crash por Gildor
+ - 3.10 Warrior -
+3.10.1  - 13/08/2014: Warrior: Fix spell Wrecking Crew, ahora solo se obtendrá Enrage al causar un golpe crítico con Mortal Strike por Gildor
+3.10.2  - 13/08/2014: Warrior: Fix spell Improved Harmstring, ahora aplicará el efecto al reaplicar seccionar por Gildor
+3.10.3  - 19/08/2014: Warrior: Fix spell Blood Craze, ahora aplicará el efecto al recibir cualquier golpe y no solo críticos por Gildor
+3.10.4  - 20/08/2014: Warrior: Fix spell Meat Cleaver, ahora aumentará el daño de Cleave por Gildor
+3.10.5  - 21/08/2014: Warrior: Fix spell Shockwave, ahora causará el daño correcto por Gildor
+3.10.6  - 27/08/2014: Warrior: Fix spell Thunderstruck, ahora aumentará el daño de Cleave por Gildor
+3.10.7  - 27/08/2014: Warrior: Fix spell Thunderstruck, ahora aumentará el daño de Shockwave por Gildor
+3.10.8  - 12/09/2014: Warrior: Fix spell Impending Victory, ahora curará el 5% de vida al usar Victory Rush y tener el aura del talento activa por Gildor
+3.10.9  - 13/09/2014: Warrior: Fix spell Shield Specialization, ahora generará la ira extra correspondiente al reflejar un hechizo por WoWSource434 y modificado por Gildor
+3.10.10 - 29/11/2014: Warrior: Fix spell Second Wind, ahora realizará la sanación correcta por WoWSource434 y modificado por Gildor
+3.10.11 - 28/12/2014: Warrior: Fix spell Taste for Blood, ahora solo funcionará al causar daño con desgarrar por Gildor
+3.10.12 - 29/12/2014: Warrior: Fix spell Charge, ahora no aplicará DR a los stuns por Gildor
+3.10.13 - 29/12/2014: Warrior: Fix spell Intercept, ahora no aplicará DR a los stuns por Gildor
+3.10.14 - 31/12/2014: Warrior: Fix spell Improved Hamstring, ahora aplicará el efecto root al reaplicar Hamstring en el objetivo por Gildor
+ - 3.11 Trinkets -
+ - 3.12 Special -
+3.12.1  - 19/09/2014: Implementado Spell delay por Dany y Soneh y modificado por Gildor
+3.12.2  - 28/11/2014: Goblin: Fix spell Racial Rocket Barrage, ahora realizará el daño correcto por Remake y modificado por Gildor
+3.12.3  - 18/12/2014: Huargen: Fix al morir no podia volar en zonas que las demás razas si podían por Gildor
+3.12.4  - 05/01/2015: Draenei: Fix spell Racial Heroic Presence, ahora aplicará el indice de golpe correspondiente por WoWSource434 y modificado por Gildor
+
+#################
+# Items y Tiers #
+#################
+ - 3.13 Items -
+3.13.1  - 21/07/2014: Items: Fix item Keys to the hot rod, ahora no creasheara el cliente al presionar ESC por Angarius
+3.13.2  - 21/07/2014: Items: Fix item Keys to the hot rod, ahora no se podrá usar en interiores por Gildor y Muza
+3.13.3  - 08/10/2014: Items: Fix item Tambores del dios tortuga, ahora no creasheara el cliente al presionar ESC por Efreet
+3.13.4  - 21/11/2014: Mago: Fix Glyph of Mirror Image, modificado Script para que sea más lógico por WoWSource434 y modificado por Gildor
+3.13.5  - 05/01/2015: Paladin: Fix Glyph of Dazing Shield, ahora solo aplicará el efecto al golpear con Avenger's Shield por Gildor
+3.13.6  - 07/01/2015: Rogue: Fix Glyph of Backstab, ahora solo funcionará al realizar un golpe crítico con Backstab por Gildor
+3.13.7  - 10/01/2015: Hunter: Fix Glyph of Aimed Shot, ahora solo funcionará con golpes críticos de Aimed Shot por Gildor
+ - 3.14 Tiers -
+
+
+############
+# Misiones #
+############
+  - 4.1 Clases -
+4.1.1  - 20/07/2014: Clases: El Ojo De Acherus(DK) por Efreet
+4.1.2  - 21/07/2014: Clases: Gothick the Harvester (DK) por Efreet
+4.1.3  - 08/08/2014: Clases: Como Ganar Amigos e Influenciar a los Enemigos (DK) por Efreet y Muzashi
+4.1.4  - 18/08/2014: Sacerdote: Arregladas todas las misiones donde aprendes a lanzar Sanacion Relampago tipo "The Arts of a Priest" para todas las razas por Efreet
+4.1.5  - 22/08/2014: Clases: Una Sorpresa Especial (DK) por Efreet
+4.1.6  - 22/08/2014: Clases: Arregladas todas las misiones donde aprendes a lanzar "Senetencia" tipo "The Way of the Sunwalkers" (Paladin) para todas las razas por Efreet
+4.1.7  - 02/09/2014: Clases: La muerte viene de arriba (DK) por Efreet
+4.1.8  - 08/10/2014: Clases: El camino de los reyes (DK) / La bendicion del jefe de guerra (DK) por Gildor y Efreet
+4.1.9  - 13/10/2014: Clases: Arregladas todas las misiones donde aprendes a lanzar "Misiles arcanos" tipo "Mage Training" para todas las razas por Efreet
+4.1.10 - 13/10/2014: Clases: Arregladas todas las misiones donde aprendes a lanzar "Rejuvenecimiento" tipo "Rejuvenation" para todas las razas por Efreet
+4.1.11 - 19/12/2014: Clases: Armas de oscuridad (Paladín) por Eissesh
+  - 4.2 Gilneas -
+4.2.1 - 02/09/2014: Gilneas: No tiene forma de barco por Efreet
+4.2.2 - 02/09/2014: Gilneas: Lider de la manada por Jar
+4.2.3 - 04/09/2014: Gilneas: Varados en el pantano por Jar
+4.2.4 - 05/09/2014: Gilneas: El gato de la abuela por Jar
+4.2.5 - 05/09/2014: Gilneas: Hacia la Mansion de Cringris por Jar
+4.2.6 - 09/09/2014: Gilneas: Traicion en el Tramo de la Tempestad por Efreet
+4.2.7 - 09/08/2014: Gilneas: Dar esquinazo por Efreet
+4.2.8 - 13/09/2014: Gilneas: La batalla por la ciudad de Gilneas por Efreet
+4.2.9 - 09/09/2014: Gilneas: A la caza de Sylvanas por Efreet
+4.2.10 - 09/09/2014: Gilneas: Retrasando lo inevitable por Efreet
+4.2.11 - 09/09/2014: Gilneas: Descanso eterno por Efreet
+4.2.12 - 09/09/2014: Gilneas: La bendicion del patriarca por Efreet
+4.2.13 - 09/09/2014: Gilneas: Puerto Quilla por Efreet
+4.2.14 - 09/09/2014: Gilneas: Tienen aliados pero nosotros tambien por Efreet
+4.2.15 - 13/09/2014: Gilneas: Llego la hora de las presentaciones por Jar
+4.2.16 - 15/09/2014: Gilneas: Recuperar lo que es nuestro por Jar
+4.2.17 - 16/09/2014: Gilneas: Ni humano ni bestia por Jar
+4.2.18 - 16/09/2014: Gilneas: Preparations Jar
+4.2.19 - 20/09/2014: Gilneas: Ni humano ni bestia parte final por Jar
+4.2.20 - 21/09/2014: Gilneas: Traicion en el tramo de la tempestad por Jar
+4.2.21 - 26/09/2014: Gilneas: Hasta las Rodillas por Jar
+4.2.22 - 16/10/2014: Gilneas: Hacia la mansion de Cringris por Efreet
+  - 4.3 Kezan -
+4.3.1  - 04/08/2014: Kezan: Las llaves del bólido por Muzashi
+4.3.2  - 05/08/2014: Kezan: Encárgate personalmente por Muzashi
+4.3.3  - 08/08/2014: Kezan: Dureza necesaria por Muzashi
+4.3.4  - 22/08/2014: Kezan: El tanto de la victoria por Muzashi
+4.3.5  - 22/08/2014: Kezan: Ahorros de toda una vida por Muzashi
+4.3.6  - 23/08/2014: Kezan: Voy en un coche... por Muzashi
+4.3.7  - 24/08/2014: Las Islas Perdidas: Cápsulas de escape goblin por Muzashi
+4.3.8  - 24/08/2014: Las Islas Perdidas: ¡Devuélvenos lo que es nuestro! por Muzashi
+4.3.9  - 24/08/2014: Las Islas Perdidas: Ahora es nuestro problema por Muzashi
+4.3.10  - 24/08/2014: Las Islas Perdidas: ¡Socorro! por Muzashi
+4.3.11  - 28/08/2014: Las Islas Perdidas: Fotografiar lo desconocido por Muzashi
+4.3.12  - 28/08/2014: Las Islas Perdidas: ¿Los orcos saben escribir? por Muzashi
+4.3.13  - 28/08/2014: Las Islas Perdidas: El enemigo de mi enemigo por Muzashi
+4.3.14  - 30/08/2014: Las Islas Perdidas: Infrarrojos = inframuertos por Muzashi
+4.3.15  - 31/08/2014: Las Islas Perdidas: A los acantilados por Muzashi
+4.3.16  - 31/08/2014: Las Islas Perdidas: Problemas mineros por Muzashi
+4.3.17  - 31/08/2014: Las Islas Perdidas: El segador de malas hierbas por Muzashi
+4.3.18  - 01/09/2014: Las Islas Perdidas: Un cargamento preciado por Muzashi
+4.3.19  - 01/09/2014: Las Islas Perdidas: Cambios de fase por Muzashi
+4.3.20  - 05/09/2014: Las Islas Perdidas: Preparados, listos, ¡fuego! por Hyxon y Muzashi
+4.3.21  - 06/09/2014: Las Islas Perdidas: El huevo más grande del mundo por Muzashi
+4.3.22  - 07/09/2014: Las Islas Perdidas: Perseguir al pollo por Muzashi e Hyxon
+4.3.23  - 06/09/2014: Las Islas Perdidas: ¿Y ahora quién encabeza la cadena alimentaria? por Muzashi
+4.3.24  - 07/09/2014: Las Islas Perdidas: ¡Invasión inminente! por Muzashi
+4.3.25  - 07/09/2014: Las Islas Perdidas: El Cártel Pantoque por Hyxon y Muzashi
+4.3.26  - 07/09/2014: Las Islas Perdidas: Un goblin con piel de tiburón por Hyxon y Muzashi
+4.3.27  - 09/09/2014: Las Islas Perdidas: El poni flotador irresistible por Hyxon y Muzashi
+4.3.28  - 10/09/2014: Las Islas Perdidas: Envía un mensaje por Hyxon
+4.3.29  - 10/09/2014: Las Islas Perdidas: Problema de los Oomlot resuelto por Hyxon
+4.3.30  - 10/09/2014: Las Islas Perdidas: El volcán por Hyxon
+4.3.31  - 10/09/2014: Las Islas Perdidas: Los tres pigmeos por Hyxon
+4.3.32  - 10/09/2014: Las Islas Perdidas: Polvo del Rock por Hyxon
+4.3.33  - 11/09/2014: Las Islas Perdidas: Liberar a los cautivos por Hyxon
+4.3.34  - 11/09/2014: Las Islas Perdidas: Los hijos del dios tortuga por Hyxon y Eissesh
+4.3.35  - 11/09/2014: Las Islas Perdidas: El impulso de botas cohetes por Hyxon y Eissesh
+4.3.36  - 13/09/2014: Las Islas Perdidas: Regresar a la ciudad por Muzashi
+4.3.37  - 14/09/2014: Las Islas Perdidas: Ciudad de Bolsillo: ¡nos atacan! por Muzashi
+4.3.38  - 21/09/2014: Las Islas Perdidas: ¡No vayas hacia la Luz! por Muzashi
+4.3.39  - 22/09/2014: Las Islas Perdidas: Plátanos explosivos por Muzashi
+4.3.40  - 29/09/2014: Las Islas Perdidas: La venganza del Jefe de Guerra por Hyxon y Muzashi
+4.3.41  - 29/09/2014: Las Islas Perdidas: Dar el cambiazo por Muzashi
+4.3.42  - 29/09/2014: Las Islas Perdidas: Zombis contra botas con súper cohetes propulsores por Muzashi
+4.3.43  - 29/09/2014: Las Islas Perdidas: Los comandantes del IV:7 por Hyxon
+4.3.44  - 30/09/2014: Las Islas Perdidas: ¡Rendíos! por Hyxon y Muzashi
+4.3.45  - 01/10/2014: Las Islas Perdidas: Vamos de paseo por Hyxon
+4.3.46  - 01/10/2014: Las Islas Perdidas: La Mina de Trabajos Forzados de Gallywix por Hyxon
+4.3.47  - 02/10/2014: Las Islas Perdidas: ¡La Kaja'Cola te da IDEAS! (TM) por Hyxon
+4.3.48  - 03/10/2014: Las Islas Perdidas: Liberar la mente por Hyxon
+4.3.49  - 05/10/2014: Las Islas Perdidas: ¡Tíralo al suelo! por Hyxon
+4.3.50  - 05/10/2014: Kezan: Cambios de fase por Hyxon
+4.3.51  - 05/10/2014: Las Islas Perdidas: Una luz al final del túnel por Hyxon
+4.3.52  - 07/10/2014: Las Islas Perdidas: Trayecto en vagón de mina por Hyxon
+4.3.53  - 07/10/2014: Las Islas Perdidas: Desconectar trituradoras por Hyxon
+4.3.54  - 07/10/2014: Las Islas Perdidas: El uniforme de bombalón supremo por Hyxon
+4.3.55  - 07/10/2014: Las Islas Perdidas: ¿Qué clase de nombre es Locko? por Hyxon
+4.3.56  - 07/10/2014: Las Islas Perdidas: ¡Volcanoth! por Hyxon y Muzashi
+4.3.57  - 07/10/2014: Las Islas Perdidas: Viejos amigos por Muzashi
+4.3.58  - 07/10/2014: Las Islas Perdidas: Deshacerse de las minas a lo goblin por Hyxon y Muzashi
+4.3.59  - 08/10/2014: Las Islas Perdidas: El camino más rápido al corazón por Hyxon
+4.3.60  - 08/10/2014: Las Islas Perdidas: Los Pozos de Esclavos por Hyxon
+4.3.61  - 09/10/2014: Las Islas Perdidas: Velocidad de escape por Hyxon y Muzashi
+4.3.62  - 10/10/2014: Las Islas Perdidas: Me quiere, NO me quiere... por Hyxon
+4.3.63  - 10/10/2014: Las Islas Perdidas: ¿Qué clase de nombre es Cara Melo? por Hyxon
+4.3.64  - 11/10/2014: Las Islas Perdidas: ¡Victoria! por Hyxon
+4.3.65  - 11/10/2014: Las Islas Perdidas: El emisario del Jefe de Guerra por Hyxon
+4.3.66  - 12/10/2014: Kezan: Cuidando del negocio por Hyxon
+4.3.67  - 12/10/2014: Kezan: Kaja'Cola por Hyxon
+4.3.68  - 12/10/2014: Kezan: Megs de marketing por Hyxon
+  - 4.4 Kalimdor -
+4.4.1 - 22/07/2014: Durotar: Foso de Pruebas por Hyxon
+4.4.2 - 21/07/2014: Teldrassil: arreglado el orden de la cadena inicial de los Elfos de la Noche por Efreet
+4.4.3 - 08/08/2014: Durotar: Mejor de lo Esperado por Efreet
+4.4.4 - 08/08/2014: Mulgore: Ultimos Ritos, Primeros Ritos por Efreet y Muzashi
+4.4.5 - 18/07/2014: Isla Bruma Azur: Arreglado el orden de la cadena inicial de los Draeneis por Efreet
+4.4.6 - 11/08/2014: Mulgore: Alimento Maligno por Hyxon
+4.4.7 - 22/08/2014: Durotar: Pescando cangrejos (orden) por Efreet y Muzashi
+4.4.8 - 01/09/2014: Durotar: Los ritos de los Vientos por Hyxon
+4.4.9 - 04/09/2014: Mulgore: corregido el orden de misiones de los Taurens por Hyxon
+4.4.10 - 04/09/2014: Islas del Eco: Romper el frente por Hyxon
+4.4.11 - 09/10/2014: Teldrassil: Teldrassil, Transpaso de conocimiento por Efreet
+4.4.12 - 09/10/2014: Isla Bruma Azur: Recargando cristales de vida por Efreet
+4.4.13 - 11/10/2014: Durotar: Un mensaje para Garrosh por Hyxon
+4.4.14 - 18/10/2014: Darnassus: El roble quejumboroso por Efreet
+4.4.15 - 19/10/2014: Vallefresno: Rescatar a los caídos por Hyxon
+4.4.16 - 19/10/2014: Los Baldíos del Norte: Competencias a mí por Hyxon
+4.4.17 - 24/09/2014: Mulgore: El tótem de Tronacuerno por Hyxon
+4.4.18 - 24/10/2014: Vallefresno: ¿Reduciendo la... manada? por Hyxon
+4.4.19 - 25/10/2014: Frondavil: A la caza de fuegos fatuos por Hyxon
+4.4.20 - 25/10/2014: Vallefresno: Tres amigos del bosque por Hyxon
+4.4.21 - 25/10/2014: Marjal Revolcafango: Desprestigiando a los desertores por Hyxon
+4.4.22 - 27/10/2014: Tanaris: La orden del Jefe de Guerra: ¡Tanaris! por Hyxon
+4.4.23 - 29/10/2014: Los Baldíos del Norte: La fortuna de Gazlowe por Hyxon
+4.4.24 - 30/10/2014: Marjal Revolcafango: ¡Arrasa el Puesto Cuernoatroz! por Hyxon
+4.4.25 - 30/10/2014: Teldrassil: El druida de la Zarpa por Hyxon
+4.4.26 - 02/11/2014: Costa Oscura: Sonsacando a los espíritus por Hyxon
+4.4.27 - 02/11/2014: Costa Oscura: El fuego de Elune por Hyxon
+4.4.28 - 04/11/2014: Costa Oscura: La bendición del oso por Hyxon
+4.4.29 - 04/11/2014: Costa Oscura: El señor de la guerra Escama Oscura por Hyxon
+4.4.30 - 04/11/2014: Darnassus: Rompen olas de cambio por Hyxon
+4.4.31 - 05/11/2014: Los Baldíos del Norte: Cazar a las cazadoras por Hyxon
+4.4.32 - 05/11/2014: Los Baldíos del Norte: Discípulos de Naralex por Hyxon
+4.4.33 - 05/11/2014: Vallefresno: Bañado en luz por Hyxon
+4.4.34 - 05/11/2014: Vallefresno: De su propio diseño por Hyxon
+4.4.35 - 05/11/2014: Costa Oscura: Las semillas de la vida por Hyxon
+4.4.36 - 07/11/2014: Vallefresno: Pico del Trueno por Hyxon
+4.4.37 - 07/11/2014: Costa Oscura: A contraviento por Hyxon
+4.4.38 - 07/11/2014: Costa Oscura: Una cata repugnante por Hyxon
+4.4.39 - 14/11/2014: Frondavil: Rompe lo irrompible por Hyxon
+4.4.40 - 18/11/2014: Frondavil: Sacrificando a los corruptos por Hyxon
+4.4.41 - 19/11/2014: Sierra Espolón: Por eso los llaman peones... por Hyxon
+4.4.42 - 21/11/2014: Feralas: Avistamiento de pie grande por Hyxon
+4.4.43 - 29/11/2014: Los Baldíos del Sur: Substracción de víboris por Hyxon
+4.4.44 - 29/11/2014: Los Baldíos del Sur: Mantener los carroñeros a raya por Hyxon
+4.4.45 - 15/12/2014: Costa Oscura: Materiales de ritual por Hyxon
+4.4.46 - 16/12/2014: Los Baldíos del Sur: Retomar la batalla por Hyxon
+4.4.47 - 16/12/2014: Orgrimmar: Sauranok indicará el camino por Hyxon
+4.4.48 - 16/12/2014: Azshara: Informa a Horzak por Hyxon
+4.4.49 - 16/12/2014: Durotar: Perdido, pero no olvidado por Hyxon
+4.4.50 - 20/12/2014: Costa Oscura: La caja mecánica 413 por Hyxon
+4.4.51 - 11/01/2015: Durotar: Nunca te fíes de un gran pincho y una sonrisa por Hyxon
+4.4.52 - 12/01/2015: Cráter de Un'Goro: Transportadas por las olas por Eissesh
+  - 4.5 EasternKingdom -
+4.5.1 - 21/07/2014: Dun Morogh: arreglado el orden de la cadena inicial de los Gnomos por Efreet
+4.5.2 - 21/07/2014: Claros de Tirisfal: arreglado el orden de la cadena inicial de los No Muertos por Efreet
+4.5.3 - 28/07/2014: Claros de Tirisfal: La verdad de la tumba por Hyxon y Efreet
+4.5.4 - 22/08/2014: Dun Morogh: Concluyendo el trabajo por Efreet
+4.5.5 - 25/08/2014: Dun Morogh: Descontaminacion por Efreet
+4.5.6 - 01/09/2014: Claros de Tirisfal: No son mejores que los zombis por Hyxon
+4.5.7 - 01/09/2014: Dun Morogh: ¡Abajo con Prensadiente! por Efreet
+4.5.8 - 19/09/2014: Claros de Tirisfal: Reclutamiento por Hyxon
+4.5.9 - 11/10/2014: Bosque Canción Eterna: Sed insaciable por Hyxon
+4.5.10 - 21/10/2014: Tierras de la Peste del Oeste: La milicia de granjeros por Hyxon
+4.5.11 - 31/10/2014: Montañas Crestagrana: John J. Keeshan por Hyxon
+4.5.12 - 02/11/2014: Castillo de Colmillo Oscuro: Un arma adecuada por Hyxon
+4.5.13 - 07/11/2014: El Cabo de Tuercespina: Un festín de gigante por Hyxon
+4.5.14 - 07/11/2014: Páramos de Poniente: Se busca héroe: ¡Páramos de Poniente! por Hyxon
+4.5.15 - 07/11/2014: El Cabo de Tuercespina: A mí me recuerda a un tauren pirata por Hyxon
+4.5.16 - 18/11/2014: El Cabo de Tuercespina: A ver qué tienes, Zanzil por Eissesh
+4.5.17 - 09/11/2014: Claros de Tirisfal: La variedad es la sal de la muerte por Hyxon
+4.5.18 - 15/11/2014: Peninsula de Tol Barad: Aprender del pasado por Efreet
+4.5.19 - 19/11/2014: Bosque Canción Eterna: Mercancía de Ciudad de Lunargenta por Hyxon
+4.5.20 - 21/11/2014: Pantano de las Penas: El Puerto por Hyxon
+4.5.21 - 27/11/2014: Montañas Crestagrana: En busca de la Compañía Bravo por Hyxon
+4.5.22 - 28/11/2014: Tierras de la Peste del Este: Cronicas de la mano de plata por Efreet
+4.5.23 - 13/12/2014: Cavernas del Tiempo: Fixeado el orden de misiones de Andormu para desbloquear la mazmorra de Cienaga Negra por Efreet
+4.5.24 - 16/12/2014: Tierras de la Peste del Oeste: ¡Una emboscada! por Hyxon
+4.5.25 - 16/12/2014: Tierras de la Peste del Oeste: Los que siguen aferrándose a este mundo por Hyxon
+4.5.26 - 16/12/2014: Bosque del Ocaso: Entrega a Harris por Hyxon
+4.5.27 - 16/12/2014: El Cabo de Tuercespina: Detalles del ataque por Hyxon
+4.5.28 - 16/12/2014: Tierras de la Peste del Este: Los héroes de Villa Darrow por Hyxon
+4.5.29 - 16/12/2014: Tierras de la Peste del Este: Se busca héroe: ¡Tierras de la Peste del Este! por Hyxon
+4.5.30 - 16/12/2014: Tierras de la Peste del Este: El Montero por Hyxon
+4.5.31 - 16/12/2014: Las Estepas Ardientes: Se busca héroe: ¡Las Estepas Ardientes! por Hyxon
+4.5.32 - 19/12/2014: Garganta de fuego: Una torpe reliquia por Eissesh
+4.5.33 - 20/12/2014: Dun Morogh: Concluyendo el trabajo por Eissesh
+4.5.34 - 20/12/2014: Pantano de las Penas: Mareas oscuras por Hyxon
+4.5.35 - 20/12/2014: Pantano de las Penas: Refuerzos denegados por Hyxon
+4.5.36 - 26/12/2014: El cabo de Tuercespina: Desafío Gurubashi por Eissesh
+4.5.37 - 26/12/2014: Garganta de fuego: Fuera de lugar por Eissesh
+  - 4.6 MountHyjal -
+4.6.1 - 27/08/2014: Monte Hyjal: El regreso del baron Geddon por Saitama
+4.6.2 - 29/08/2014: Monte Hyjal: Gar'gol tiene que largarse por Cinde
+4.6.3 - 31/08/2014: Monte Hyjal: Una oración y un ala por Hyxon
+4.6.5 - 13/09/2014: Monte Hyjal: Maestro de forja Pyrendius por Saitama y Efreet
+4.6.6 - 14/09/2014: Monte Hyjal: Corazón negro de fuego por Saitama
+4.6.7 - 26/09/2014: Monte Hyjal: ¡Por todos los ciervos! por Saitama
+4.6.8 - 08/10/2014: Monte Hyjal: ¡A cazar huevos! por Efreet
+4.6.9 - 08/10/2014: Monte Hyjal: La muerte de Sethria por Efreet
+4.6.10 - 08/10/2014: Monte Hyjal: Monarca de magma por Efreet
+4.6.11 - 08/10/2014: Monte Hyjal: Muerte a la madre del linaje por Efreet
+4.6.12 - 08/10/2014: Monte Hyjal: El guardian de la puerta por Efreet
+4.6.13 - 08/10/2014: Monte Hyjal: El señor del fuego por Efreet
+4.6.14 - 13/10/2014: Monte Hyjal: Mientras Hyjal arde por Efreet
+4.6.15 - 16/10/2014: Monte Hyjal: La fuerza de Tortolla por Efreet y Antgarmar
+4.6.16 - 16/10/2014: Monte Hyjal: Un ancestro renace por Efreet
+4.6.17 - 17/10/2014: Monte Hyjal: Fix generico de orden de misiones, algunas estaban erroneas, por Efreet
+4.6.18 - 16/10/2014: Monte Hyjal: Phaseado de hyjal por Efreet
+4.6.19 - 22/10/2014: Monte Hyjal: ¡Sácame de aquí! por Cinde
+4.6.29 - 24/10/2014: Monte Hyjal: Caparazon de demonio por Efreet
+  - 4.7 Vash'jir -
+  - 4.8 Infralar - 
+4.8.1 - 21/09/2014: Infralar: Todos nuestros amigos están muertos por Cinde
+4.8.2 - 11/10/2014: Infralar: Sellando el camino por Cinde
+4.8.3 - 12/10/2014: Infralar: Algo que arda por Cinde
+4.8.4 - 22/10/2014: Infralar: Inmersión mercúrica por Cinde
+4.8.6 - 05/11/2014: Infralar: Investigación Crepuscular por Cinde
+4.8.7 - 07/11/2014: Infralar: Selección en el frente por Cinde
+4.8.8 - 07/11/2014: Infralar: El favor del Padre Pétreo por Cinde
+4.8.9 - 07/11/2014: Infralar: Desangrar al modelasangre por Cinde
+4.8.11 - 07/11/2014: Infralar: El cuaderno del maestro de forja por Cinde
+4.8.12 - 07/11/2014: Infralar: Encuentro en el Marjal Argenta por Cinde
+4.8.13 - 07/11/2014: Infralar: La Caída de Alamuerte por Cinde
+4.8.14 - 07/11/2014: Infralar: El descubrimiento de Maziel por Cinde
+4.8.15 - 07/11/2014: Infralar: El Mirador Crepuscular por Cinde
+4.8.16 - 08/11/2014: Infralar: Un gran cebo para una gran presa por Cinde
+4.8.17 - 10/11/2014: Infralar: Interroga a los esclavos por Cinde
+4.8.18 - 10/11/2014: Infralar: Orden de misiones por Cinde
+4.8.19 - 12/01/2015: Infralar: Infralar, reino de la tierra por Muzashi y Efreet
+  - 4.9 Maelstrom - 
+  - 4.10 Uldum - 
+4.10.1 - 07/12/2014: Uldum: Bajo arenas asfixiantes por Hyxon
+  - 4.11 TwilightHighlands - 
+4.11.1 - 26/12/2014: Tierras altas crepusculares: Los únicos hogares que tenemos por Eissesh 
+4.11.2 - 12/01/2015: Tierras altas crepusculares: El espíritu de la lucha por Eissesh
+  - 4.12 Rasganorte -
+4.12.1 - 24/10/2014: Tundra Boreal: No sin luchar por Efreet
+4.12.2 - 24/10/2014: Tundra Boreak: Kaw, el destructor de mamuts por Efreet
+4.12.3 - 25/10/2014: Tundra Boreal: Marcando los sumideros por Muzashi y reajustado por Hyxon
+4.12.5 - 25/10/2014: Zul'Drak: Reponer las existencias por Hyxon
+4.12.6 - 25/10/2014: Cementerio de Dragones: ¡Viva Roanauk! por Muzashi
+4.12.7 - 27/10/2014: Zul'Drak: Patrulla trol: Estandartes en alto por Muzashi
+4.12.8 - 03/11/2014: Cementerio de Dragones: Un maestro de runas solitario por Muzashi
+4.12.9 - 03/11/2014: Cementerio de Dragones: El misterio del Infinito por Muzashi y reajustado por Hyxon
+4.12.10 - 05/11/2014: Zul'Drak: Paracaídas para la Cruzada Argenta por Hyxon
+4.12.11 - 21/11/2014: Dalaran: Inside the Frozen Citadel por Hyxon
+4.12.12 - 28/11/2014: Torneo Argenta: Fixeado todo el orden de las misiones de Torneo Argenta por Aokromes, mejoras por Efreet
+4.12.13 - 15/12/2014: Cuenca de Sholazar: Ansioso por ayudar por Hyxon
+4.12.14 - 16/12/2014: Tundra Boreal: El poder de los elementos por Muzashi
+4.12.15 - 22/12/2014: Cumbres Tormentosas: Esclavos de los Tronaforjado por Eissesh
+4.12.16 - 10/01/2015: Fiordo Aquilonal: Prueba en el mar por Muzashi
+4.12.17 - 10/01/2015: Fiordo Aquilonal: Déjalo y Ondéalo por Kroenen y Muzashi
+4.12.18 - 10/01/2015: Fiordo Aquilonal: Una lección de miedo por Muzashi
+4.12.19 - 10/01/2015: Fiordo Aquilonal: Derriba esos escudos por Inky y Muzashi
+4.12.20 - 07/11/2013: Tundra Boreal: El emisario por Muzashi
+4.12.21 - 10/01/2015: Tundra Boreal: Viaje en alfombra mágica por Nay y Muzashi
+4.12.22 - 02/06/2012: Tundra Boreal: Las llanuras de Nasam por Muzashi
+4.12.23 - 10/01/2015: Tundra Boreal: En esas cuevas pasa algo raro - Detén a la Plaga por Muzashi
+4.12.24 - 10/01/2015: Tundra Boreal: Tráelos de vuelta con vida por Muzashi
+4.12.25 - 07/10/2012: Tundra Boreal: Entrega de cobardes... en menos de 30 minutos, o será gratis por Muzashi
+4.12.26 - 11/01/2015: Tundra Boreal: Lupus Pupus por Muzashi
+4.12.27 - 11/01/2015: Tundra Boreal: Domina a la tormenta por Muzashi
+4.12.28 - 11/01/2015: Tundra Boreal: No tientes a la suerte por Muzashi
+  - 4.13 Terrallende -
+4.13.1 - 24/10/2014: Península del Fuego Infernal: Quémalo... ¡por la Horda! por Hyxon
+4.13.2 - 06/11/2014: Valle Sombraluna: Fixeado el orden de las misiones del Ala Abisal por Efreet
+4.13.3 - 13/12/2014: Marismas de Zangar: Traeme otra mata por Efreet
+4.13.4 - 19/12/2014: Montañas Filospada: Cámaras de Estasis de Bash'ir por Eissesh
+4.13.5 - 20/12/2014: Valle Sombraluna: Adivinación: la capa de Sanguino por Eissesh
+4.13.6 - 25/09/2013: Península del Fuego Infernal: El cristal de adivinación demoníaco por Muzashi
+  - 4.14 Especiales -
+4.14.1 - 19/11/2014: Correcciones de varias misiones de profesión para que ahora solo puedan completarlas aquellos que tengan dicha profesión en cierto nivel por Eissesh
+4.14.2 - 21/11/2014: Los Oráculos: Voluntad de los titanes por Hyxon
+4.14.3 - 16/12/2014: Corregidas varias diarias de profesiones para que solo dé una al día y no todas a la vez por Eissesh
+4.14.4 - 20/12/2014: Corregida las misiones de alquimia, ahora solo habrá una misión de especialización disponible por Hyxon
+4.14.5 - 08/01/2015: TolBarad: Eliminada la flag que hacia shareable las quest de tolbarad y peninsula por Evef
+
+################
+# Traducciones #
+################
+5.1  - 03/06/2014 Logon: Traducido el mensaje cuando se cae el nodo por Evef
+5.2  - 16/10/2014 NpcText: Traducidos los npc text (gossip menu) del alemán al inglés por Hyxon
+5.3  - 16/10/2014 GossipMenuOption: Traducidos los GossipMenuOption del alemán al inglés por Hyxon
+5.4  - 10/10/2014 ThroneOfTheTides: Traducidos todos los boses del aleman/ingles al español por Muit
+5.5  - 16/10/2014 CreatureText: Traducidos los CreatureText del alemán al inglés por Hyxon
+
+
+##########
+# Varios #
+##########
+6.1  - 12/07/2014: Hunter: Fix trainer para aprender la spell Control Pet correcta por Gildor
+6.2  - 12/08/2014: Druida: Fix trainer para aprender la spell Pounce, ahora se aprenderá al nivel 32 por Gildor
+6.3  - 14/08/2014: Warlock: Fix trainer para aprender la spell Control Demon correcta por Gildor
+6.4  - 08/10/2014: Gameobject altar de iniciacion, ahora no tirara crash client al usar ESC despues de utilizarlo por Efreet
+6.5  - 08/10/2014: Gilneas NPCs: insertamos el flags IMMUNE_TO_NPC (512) a algunos NPCs de Gilneas para que no se peguen con otros NPCs, simulando un efecto mas blizzlike por Efreet
+6.6  - 10/10/2014: Kezan NPCs: modificamos el gossip_menu_option para que se convierta en instructor de Magos por Hyxon
+6.7  - 10/10/2014: Gilneas NPCs: modificamos el gossip_menu_option para que se convierta en instructor de Sacerdotes por Hyxon
+6.8  - 11/10/2014: Blood Elf Start NPCs: añadimos y modificamos el gossip_menu_option para que se convierta en instructor de Guerreros por Hyxon
+6.9  - 12/10/2014: Corregidos los daños, vidas, efectos blizzlike, NPC duplicados de Kezan y Las Islas Perdidas por Hyxon
+6.10 - 16/10/2014: Fixeados muchos NPCs custom en Hyjal, asi como insertados nuevos flags o eliminados duplicados por Efreet
+6.11 - 17/10/2014: Corregido el gossip_menu_option del NPC Kall Valemil para que se convierta en vendedor de monturas por Hyxon
+6.12 - 17/10/2014: Corregido el gossip_menu_option del NPC Lenelai para que se convierta en vendedor de monturas por Hyxon
+6.13 - 19/10/2014: Corregidos vendedores e instructores de Kezan y las Islas Perdidas por Hyxon
+6.14 - 20/10/2014: Gnomos: Fix Racial Escape Artist, ahora la tendrán todas las clases de la raza Gnomo por Gildor
+6.15 - 20/10/2014: Taurens: Fix Raciales, ahora la tendrán todas las clases de la raza Tauren por Gildor
+6.16 - 21/10/2014: Añadiendo ángeles de resurreción y eliminando duplicados o incorrectos por Hyxon Y Efreet
+6.17 - 21/10/2014: Orcos: Fix Racial Command, ahora la tendrán todas las clases de la raza Orco por Gildor
+6.18 - 21/10/2014: Añadiendo y editando condiciones a los vendedores de monturas para que solo se compren si son de esa raza o exaltados con ella por Hyxon
+6.19 - 22/10/2014: Reinsertada la tabla game_graveyard_zone añadiendo nuevos puntos de cementerios por Hyxon
+6.20 - 22/10/2014: Modificando los NPC de Deepholm/Infralar ajustando sus vidas/daños/detalles blizzlike por Hyxon
+6.21 - 22/10/2014: Worgen: Fix Racial Two Forms, previniendo error para que se pueda usar por Gildor
+6.23 - 22/10/2014: Correción de los rares de Rasganorte y zonas Cataclysm por Hyxon y Efreet
+6.24 - 28/10/2014: Eliminadas las resistencias exageradas de muchos NPCs al fuego, superiores a 500 puntos y llegando hasta los 29000 por Efreet
+6.25 - 28/10/2014: Añadidos los instructores de guerreros en la zona de Lunargenta por Hyxon
+6.26 - 28/10/2014: Modificando los NPC de Gilneas ajustando sus vidas/daños/detalles blizzlike por Efreet 
+6.27 - 03/11/2014: MoltenCore: Corregidos los flags de Ragnaros, ahora se podrá atacar por Efreet
+6.28 - 03/11/2014: GuaridaAlanegra: Corregidos los flags de Nefarian, ahora se podrá atacar por Efreet
+6.29 - 03/11/2014: BlackrockSpire: Corregidos los flags de Pyroguard Embersser, ahora se podrá atacar por Efreet
+6.30 - 03/11/2014: Añadido el lot a Cofre del tesoro diminuto por Eissesh
+6.31 - 03/11/2014: Corregido el lot Caja de trastos marcado por las llamas, ahora dará su lot correctamente por Eissesh
+6.32 - 03/11/2014: Corregido los daños de las Mazmorras de Ventormenta por Hyxon
+6.33 - 03/11/2014: Corregido el NPC Vitus Caminaoscuro para que se convierta en instructor de Brujos por Hyxon
+6.34 - 04/11/2014: Corregido el tamaño de Anzu en Salas Sethekk, ahora tendrá su tamaño correcto por Eissesh
+6.35 - 07/11/2014: Achievements: Introducidos varios achievements_criteria_id que nos faltaban por Efreet
+6.36 - 07/11/2014: Achievements: Introducidos varios achievements_rewards que nos faltaban por Efreet
+6.37 - 09/11/2014: Permitiendo que varios NPC y líderes de Zul'Farrak sean targeteables y ataquen por Hyxon
+6.38 - 09/11/2014: Permitiendo que varios NPC de El Horno de Sangre sean targeteables por Hyxon
+6.39 - 09/11/2014: Pit of Saron: Corregidos los flags de Scourgelord Tyrannus, ahora será targeteable por Eissesh
+6.40 - 11/11/2014: Rogue: Fix trainer para aprender la spell Venenos en el instructor de picaros por Efreet
+6.41 - 11/11/2014: Mage: Fix trainer para aprender la spell Teletransporte: Shattrath en el instructor de portales alianza por Efreet
+6.42 - 14/11/2014: Permitiendo que el NPC Kadrak sea visible a jugadores por Hyxon
+6.43 - 15/11/2014: Permitiendo que varios NPC de El Templo Oscuro sean targeteables por Efreet
+6.44 - 15/11/2014: Insertada una condicion para evitar el exploit del spell Flame Ascendancy por Efreet
+6.54 - 15/11/2014: Fixeados los vendedores de pvp de la Ventormenta y Tanaris para que vengan tambien los trinkets pvp de la alianza por Efreet
+6.55 - 19/11/2014: Fix para instructor de pesca Juno Dufrain para que enseñe dicha habilidad además de vender items por Eissesh
+6.56 - 23/11/2014: Pilgrim's Bounty: Soporte para el logro Pilgrim's Paunch por Jar
+6.57 - 27/11/2014: Item Exploit: Limitado el item 65898 al area de la quest exclusivamente por Evef
+6.58 - 28/11/2014: Stratholme: Actualizado el boss Baron Osahendido por Lord Aurius Osahendido de forma blizzlike, incluyendo botin y solucionando el logro por Efreet
+6.59 - 28/11/2014: Fix para que los instructores de ingenieria instruyan las diferentes lentes y gafas de ingenieria que faltaban en sus recetarios por Efreet
+6.60 - 29/11/2014: LFG: Ajustados varios ilvl del lfg por Evef
+6.61 - 29/11/2014: Dire Maul: Ajustado el nivel minimo de acceso por Evef
+6.62 - 29/11/2014: Scripteado el evento de Alamuerte para el Ocaso de las capitales Ventormenta y Orgrimmar por Efreet
+6.63 - 30/11/2014: Corrigiendo fallos en Tierras de la Peste Oeste en el que Thassarian atacaba a los jugadores horda y los Stickbone Berserker daban experiencia aprovechando exploit por Hyxon
+6.64 - 01/12/2014: Eliminada aura de invisibilidad de los NPCs relacionados con la Hermandad del Torio por Efreet
+6.65 - 30/11/2014: Guarida de Onyxia: Eliminado el flag que no permitia atacar a las proles de Onyxia complicando / haciendo imposible la mazmorra por Efreet
+6.66 - 02/12/2014: Prueba del Cruzado: Permitiendo que Anub'Arak sea targeateable en dificultad 10N por Hyxon
+6.67 - 02/12/2014: Fortaleza de Utgarde: Permitiendo que Dalronn el Controlador sea visible y targeateable en ambas dificultades por Hyxon
+6.68 - 02/12/2014: La Sotiénaga: Permitiendo que La Acechadora Negra sea visible y targeateable en ambas dificultades por Hyxon
+6.69 - 02/12/2014: La Sotiénaga: Agregado el NPC T'Shu en ambas dificultades por Hyxon
+6.70 - 02/12/2014: Horno de Sangre: Permitiendo que Broggok y Keli'Dan el Ultrajador sea targeateable en ambas dificultades por Hyxon
+6.72 - 11/01/2015: Bastion Violeta: Eliminados los flags que impedian el targeteo del NPC Azure Stalker, bloqueando la mazmorra por Efreet
+6.71 - 06/12/2014: Eliminando dos Smart Script que ocasionaban al cliente WowError de los NPC Corsario y Degollador de los Mares del Sur por Hyxon
+6.73 - 13/12/2014: Templo Sumergido: Eliminados los flags que impedian el combate con la sombra de Eranikus, por Efreet
+6.74 - 13/12/2014: Stratholme: Solucionado la entrada al zigurat de Aurius, ya que con el cambio de NPC faltaba indicar su nueva ID, por Efreet
+6.75 - 13/12/2014: Fixeado el botin de diversas creaturas para que se pueda despojar el item Pluma de penacho de Muertobosque, por Efreet
+6.76 - 13/12/2014: Fixeado el botin de diversas creaturas para que se pueda despojar el item Cuentas de espiritu Nevada por Efreet
+6.77 - 13/12/2014: Fixeado el botin de diversas creaturas para que se pueda despojar el item Zarcillo de señor de la marisma por Efreet
+6.78 - 14/12/2014: Corregido el lot de Cartera de hierbas recién cortadas, ya no dará todas las plantas a la vez por Eissesh
+6.79 - 16/12/2014: Cambiando el tiempo de respawn de Anzu en Salas Sethekk a 24 horas por Eissesh y Efreet 
+6.80 - 16/12/2014: Añadidos los vendedores de hermandad a cada ciudad con sus condiciones por Jaiper y Evef
+6.81 - 09/01/2015: Antiguas Laderas de Trabalomas: Permitiendo que el Teniente Drake sea targeteable en dificultad normal por Hyxon
+
+
+##########
+# Custom #
+##########
+7.1  - 15/10/2014: Colocación de 3 misiones de Goblins autocompletables para poder finalizar la cadena por Hyxon
+7.2  - 16/10/2014: Colocacion de la mision Fin del Juego de los huargen como autocompletable para finalizar la cadena por Efreet
+7.3  - 16/10/2014: Colocacion de algunas misiones de Hyjal en autocompletables para finalizar la cadena por Efreet
+7.4  - 19/10/2014: Desactivados las spells de los objetos Vara de Hercular y Granada de mano para evitar exploits por Hyxon
+7.5  - 27/11/2014: Item Disable: Desactivada la spell de item 65667 por Evef
+7.6  - 22/12/2014: CustomEvent: Quieres tu regalo y lo sabes
+
