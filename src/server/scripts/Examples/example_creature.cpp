@@ -21,11 +21,12 @@ SDName: Example_Creature
 SD%Complete: 100
 SDComment: Short custom scripting example
 SDCategory: Script Examples
-EndScriptData */
+EndScriptData 
 
 #include "ScriptMgr.h"
 #include "ScriptedCreature.h"
 #include "ScriptedGossip.h"
+#include "ScriptPCH.h"
 
 // **** This script is designed as an example for others to build on ****
 // **** Please modify whatever you'd like to as this script is only for developement ****
@@ -38,7 +39,7 @@ EndScriptData */
 // **** Quick Info* ***
 // Functions with Handled Function marked above them are functions that are called automatically by the core
 // Functions that are marked Custom Function are functions I've created to simplify code
-
+/*
 enum Yells
 {
     //List of text id's. The text is stored in database, also in a localized version
@@ -72,13 +73,12 @@ enum Spells
 
 enum eEnums
 {
-    // any other constants
     FACTION_WORGEN                              = 24
 };
 
 //List of gossip item texts. Items will appear in the gossip window.
 #define GOSSIP_ITEM     "I'm looking for a fight"
-
+/*
 class example_creature : public CreatureScript
 {
     public:
@@ -146,7 +146,7 @@ class example_creature : public CreatureScript
 
             // *** HANDLED FUNCTION ***
             //Our Receive emote function
-            void ReceiveEmote(Player* /*player*/, uint32 uiTextEmote)
+            void ReceiveEmote(Player* /*player/, uint32 uiTextEmote)
             {
                 me->HandleEmoteCommand(uiTextEmote);
 
@@ -273,7 +273,7 @@ class example_creature : public CreatureScript
             return true;
         }
 
-        bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender*/, uint32 action)
+        bool OnGossipSelect(Player* player, Creature* creature, uint32 /*sender, uint32 action)
         {
             player->PlayerTalkClass->ClearMenus();
             if (action == GOSSIP_ACTION_INFO_DEF+1)
@@ -287,6 +287,200 @@ class example_creature : public CreatureScript
             return true;
         }
 };
+*/
+
+///////////////////////////////////
+
+#include "ScriptMgr.h"
+#include "ScriptedCreature.h"
+#include "ScriptedGossip.h"
+#include "ScriptPCH.h"
+
+enum BossSpells
+{
+    SPELL_DAGGER_THROW                            = 67280,
+    SPELL_BRUTAL_STRIKE                           = 58460,
+    SPELL_CRUSHING_LEAP                           = 68506,
+	SPELL_EXPLOSION								  = 63009,
+};
+
+enum EventTypes
+{
+    EVENT_DAGGER_THROW                            = 1,
+    EVENT_BRUTAL_STRIKE                           = 2,
+    EVENT_CRUSHING_LEAP                           = 3,
+	EVENT_MOMMY_CALLS							  = 4,
+	EVENT_SAY_FOOL								  = 5,
+	EVENT_SAY_IMPRESSED							  = 6,
+	EVENT_SAY_ARROGANT							  = 7,
+	EVENT_SAY_NOO								  = 8,
+	EVENT_SAY_SORRY								  = 9
+};
+enum SayText
+{
+	SAY_GO_AWAY							      = 1,
+	SAY_FOOL								  = 2,
+	SAY_IMPRESSED							  = 3,
+	SAY_ARROGANT							  = 4,
+	SAY_NOO									  = 5,
+	SAY_SORRY								  = 6
+};
+uint32 const  AURA_RAGE                           = 66776;
+float  const  ZPOS_GROUND                         = 67.0f;
+ 
+
+enum Factions  // usado para testear el script con cualquier npc
+{
+	FACTION_NEUTRAL=7,
+	FACTION_CROCOLISC=672,
+	HATED_BY_ALL=168
+};
+
+class example_creature : public CreatureScript
+{
+    public:
+        example_creature() : CreatureScript("example_creature") {}
+
+    struct example_creatureAI : public ScriptedAI
+    {
+		example_creatureAI(Creature* creature) : ScriptedAI(creature) {
+			me->setFaction(HATED_BY_ALL); // para calar con cualquier npc al que se le asigne el script
+		}
+		void InitializeAi(){
+			_saidFoolFlag=_saidImpressedFlag=_saidArrogantFlag=_saidNoFlag=_saidSorryFlag=false;
+		}
+        void Reset()
+        {
+            _events.Reset();
+            _events.ScheduleEvent(EVENT_BRUTAL_STRIKE, 15000);
+            _events.ScheduleEvent(EVENT_DAGGER_THROW, urand(10000, 15000));
+            _events.ScheduleEvent(EVENT_CRUSHING_LEAP, urand(20000, 30000));
+            _events.ScheduleEvent(EVENT_MOMMY_CALLS, MINUTE*IN_MILLISECONDS);
+			_saidFoolFlag=_saidImpressedFlag=_saidArrogantFlag=_saidNoFlag=_saidSorryFlag=false;
+        }
+
+        void JustDied(Unit* /*killer*/)
+        {
+            _events.Reset();
+        }
+		void DamageTaken(Unit* unit, uint32& damage){
+			if(me->HealthBelowPct(90) && me->HealthAbovePct(80) ){
+				if(!_saidFoolFlag){
+					_events.ScheduleEvent(EVENT_SAY_FOOL,IN_MILLISECONDS);	
+					_saidFoolFlag=true;
+				}
+				//Talk(SAY_FOOL);Ha! Fool! You cant beat me.",LANG_UNIVERSAL
+			}else if(me->HealthBelowPct(80) && me->HealthAbovePct(50) ){
+				if(!_saidImpressedFlag){
+					_events.ScheduleEvent(EVENT_SAY_IMPRESSED,IN_MILLISECONDS);	
+					_saidImpressedFlag=true;
+				}
+				//Talk(SAY_IMPRESSED);Well Im impressed, youre doing quite well",LANG_UNIVERSAL
+			}else if(me->HealthBelowPct(50) && me->HealthAbovePct(30) ){
+				if(!_saidArrogantFlag){
+					_events.ScheduleEvent(EVENT_SAY_ARROGANT,IN_MILLISECONDS);	
+					_saidArrogantFlag=true;
+				}
+				//Talk(SAY_ARROGANT);Arrogant moron! youll pay for this insolence",LANG_UNIVERSAL
+			}else if(me->HealthBelowPct(30) && me->HealthAbovePct(10) ){
+				if(!_saidNoFlag){
+					_events.ScheduleEvent(EVENT_SAY_NOO,IN_MILLISECONDS);	
+					_saidNoFlag=true;
+				}
+				//Talk(SAY_NOO);"Nooo! please!! forgive me! I beg you",LANG_UNIVERSAL
+			}else if(me->HealthBelowPct(10)){
+				if(!_saidSorryFlag){
+					_events.ScheduleEvent(EVENT_SAY_SORRY,IN_MILLISECONDS);	
+					_saidSorryFlag=true;
+				}
+				//Talk(SAY_SORRY);"Sorry mate my momma is calling me",LANG_UNIVERSAL
+			}
+		}
+		void UpdateAI(uint32 const diff)
+        {
+            if (!UpdateVictim())
+                return;
+
+            if (me->HasUnitState(UNIT_STATE_CASTING))
+                return;
+            _events.Update(diff);
+            while (uint32 eventId = _events.ExecuteEvent())
+            {
+                switch (eventId)
+                {
+                    case EVENT_DAGGER_THROW:
+                        if (Unit* target = SelectTarget(SELECT_TARGET_RANDOM, 1, 0.0f, true))
+                        {
+                            DoCast(target, SPELL_DAGGER_THROW);
+                        }
+                        _events.ScheduleEvent(EVENT_DAGGER_THROW, 15000);
+                        break;
+                    case EVENT_BRUTAL_STRIKE:
+                        DoCastVictim(SPELL_BRUTAL_STRIKE);
+                        _events.ScheduleEvent(EVENT_BRUTAL_STRIKE, urand(15000, 15000));
+                        break;
+                    case EVENT_CRUSHING_LEAP:
+						Talk(SAY_GO_AWAY); //me->MonsterYell("Beter goo away mate!! wahahaha!!",LANG_UNIVERSAL, NULL);
+                        DoCastVictim(SPELL_CRUSHING_LEAP);
+                        _events.ScheduleEvent(EVENT_CRUSHING_LEAP, urand(20000, 35000));
+                        break;
+                    case EVENT_MOMMY_CALLS:
+                        Talk(SAY_SORRY); // cuando muere di  el texto say_sorry sin importar el flag
+                        DoCastVictim(SPELL_EXPLOSION);
+                        me->setDeathState(JUST_DIED);
+                        break;
+					case EVENT_SAY_FOOL:
+						Talk(SAY_FOOL);
+						break;
+					case EVENT_SAY_IMPRESSED:
+						Talk(SAY_IMPRESSED);
+						break;
+					case EVENT_SAY_ARROGANT:
+						Talk(SAY_ARROGANT);
+						break;
+					case EVENT_SAY_NOO:
+						Talk(SAY_NOO);
+						break;
+					case EVENT_SAY_SORRY:
+						Talk(SAY_SORRY);
+						break;
+					default:
+                        break;
+                }
+            }
+         /*            // check if creature is  outside of room
+            float HomeReference=me->GetDistance2d(me->GetHomePosition().GetPositionX(), me->GetHomePosition().GetPositionY());
+            float height=me->GetPositionZ();
+   if (!me->GetAura(AURA_RAGE))
+            {
+                if (height < ZPOS_GROUND || HomeReference > 40.0f )
+                {
+                    DoCast(me,AURA_RAGE);
+                }
+            }
+            else if(height > ZPOS_GROUND && HomeReference < 40.0f )
+            {
+                me->RemoveAura(AURA_RAGE);
+            }
+			*/
+
+            DoMeleeAttackIfReady();
+        }
+        private:
+            EventMap _events;
+			bool _saidFoolFlag;
+			bool _saidImpressedFlag;
+			bool _saidArrogantFlag;
+			bool _saidNoFlag;
+			bool _saidSorryFlag;
+		//	int _yelled;  pensaba volver a usarlo pero con operadores a nivel de bit
+    };
+    CreatureAI* GetAI(Creature* creature) const
+    {
+        return new example_creatureAI(creature);
+    }
+};
+///////////////////////////////////
 
 //This is the actual function called only once durring InitScripts()
 //It must define all handled functions that are to be run in this script

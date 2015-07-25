@@ -131,7 +131,7 @@ class AuctionHouseObject
 
   private:
     AuctionEntryMap AuctionsMap;
-
+	//AuctionBotEntryMap BotAuctionsMap;
     // storage for "next" auction item for next Update()
     AuctionEntryMap::const_iterator next;
 };

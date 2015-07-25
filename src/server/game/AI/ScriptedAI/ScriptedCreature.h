@@ -313,7 +313,6 @@ class BossAI : public ScriptedAI
         {
             if (CheckBoundary(me))
                 return true;
-
             EnterEvadeMode();
             return false;
         }

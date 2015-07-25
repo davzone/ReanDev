@@ -42,12 +42,31 @@ class example_commandscript : public CommandScript
             handler->PSendSysMessage("Hello World");
             return true;
         }
+        static bool HandleReduceHpCommand(ChatHandler* handler, const char* /*args*/)
+        {
 
+			Creature* creature=handler->getSelectedCreature();
+			if(creature != NULL)
+			{
+				// si hay una creatura seleccionada
+				// reducir su vida un 10% de su vida maxima
+				uint32 creatureMaxHealth=creature->GetMaxHealth();
+				creature->SetHealth(creatureMaxHealth-(creatureMaxHealth*.1));
+				std::string msg="La vida de [";
+				msg+=creature->GetName();
+				msg+="] se redujo un 10%";
+				handler->PSendSysMessage(msg.c_str());
+			}else{
+				handler->PSendSysMessage("No se pudo reducir hp al objetivo");
+			}
+            return true;
+        }
         ChatCommand* GetCommands() const
         {
             static ChatCommand HelloWorldCommandTable[] =
             {
                 { "hello",          SEC_PLAYER,         true,   &HandleHelloWorldCommand,        "", NULL },
+                { "reduceHp",          SEC_PLAYER,         true,   &HandleReduceHpCommand,        "", NULL },
                 { NULL,             0,                  false,  NULL,                            "", NULL }
             };
             return HelloWorldCommandTable;
